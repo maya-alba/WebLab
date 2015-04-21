@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="shortcut icon" href="{{ MEDIA_URL }}assets/img/favicon.png"/>
+	<title>Mis Ventas</title>
+	<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+	<link rel='stylesheet' href='{{ MEDIA_URL }}edd_templates/edd.css' type='text/css' media='all'/>
+	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/bootstrap.min.css' type='text/css' media='all'/>
+	<link rel='stylesheet' href='{{ MEDIA_URL }}css/style.css' type='text/css' media='all'/>
+	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/font-awesome.css' type='text/css' media='all'/>
+	
+	<!-- UNCOMMENT THE FOLLOWING LINE TO ACTIVATE THE BOXED LAYOUT (see the documentation for more)-->
+	
+	<!--
+	<link href="assets/css/boxed.css" rel="stylesheet">
+	-->	
+	
+	<link href="{{ MEDIA_URL }}assets/css/skins/bluedark.css" rel="stylesheet">
+
+</head>
+<body>
+	<div class="boxedlayout">
+
+				<!-- HEADER
+		================================================== -->
+		<nav id="wow-menu" class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href='index.html'>
+					<img alt="House Gurú" src="{{ MEDIA_URL }}assets/img/logo.png"/>
+					</a>
+				</div>
+				<!-- Menu -->
+				<div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+					<ul id="menu-top" class="nav navbar-nav navbar-right">
+						<li><a href="index.html">Inicio</a></li>
+						<li><a href="categories.html">Servicios</a></li>
+						<li><a href="offerservice.html">Ofrecer Servicio</a></li>
+						<li><a href="about.html">Quiénes somos</a></li>
+						<li class="active"><a href="checkout.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						<li class="dropdown"><a href="#">Hola Maya!</a>
+							<ul class="dropdown-menu">
+								<li><a href="account.html">Mi cuenta</a></li>
+								<li><a href="index.html">Cerrar Sesión</a></li>								
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- PAGE CONTENT
+		================================================== -->
+		<div class="templatemyaccount">
+		
+			<!-- TITLE BEGINS -->
+			<div class="headerimage" style="background-image: url(http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2015/03/header.jpg);">
+				<div class="headercontent">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="fleft">
+									<h1>Mis Ventas</h1>
+								</div>
+								<div class="fright breadc">
+									<a href="index.html">Inicio</a> / <a href="account.html">Mi cuenta</a> / Mis Ventas
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- TITLE ENDS -->
+			
+			<div class="container padtop50 padbot10">
+				<div class="row">
+				<!-- MAIN CONTENT BEGINS -->
+				<div class="col-md-12">
+					<div id="edd_checkout_wrap">
+						<form id="edd_checkout_cart_form" method="post">
+							<div id="edd_checkout_cart_wrap">
+								<table id="edd_checkout_cart" class="ajaxed">
+								<thead>
+								<tr class="edd_cart_header_row">
+									<th class="edd_cart_item_name">
+										Nombre de Servico
+									</th>
+									<th class="edd_cart_item_price">
+										Fecha
+									</th>
+									<th class="edd_cart_item_price">
+										Cliente
+									</th>
+									<th class="edd_cart_item_price">
+										Estatus
+									</th>
+									<th class="edd_cart_item_price">
+										Rating
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+								
+								<!-- cart item 1 -->
+								<tr class="edd_cart_item">
+									<td class="edd_cart_item_name">
+										<div class="edd_cart_item_image">
+											<img id="service_image" name="service_image" width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
+										</div>
+										<span id="service_" name="service_" class="edd_checkout_cart_item_title">Paseo de mascota</span>
+									</td>
+									<td id="service_date" name="service_date" class="edd_cart_item_price">
+										5/Febrero/2015
+									</td>
+									<td id="service_client" name="service_client" class="edd_cart_item_price">
+										Jimena Alba
+									</td>
+									<td id="service_status" name="service_status" class="edd-item-quantity">
+										Enviado					
+									</td>
+									<td id="service_rating" name="service_rating" class="edd_cart_item_price">
+										N/A
+									</td>
+								</tr>
+								
+								<!-- cart item 2 -->
+								<tr class="edd_cart_item">
+									<td class="edd_cart_item_name">
+										<div class="edd_cart_item_image">
+											<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
+										</div>
+										<span class="edd_checkout_cart_item_title">Servicio de Niñera Lulu</span>
+									</td>
+									<td class="edd_cart_item_price">
+										26/Mayo/2014
+									</td>
+									<td class="edd_cart_item_price">
+										Lupita Jones
+									</td>
+									<td class="edd-item-quantity">
+										Esperando calificación
+									</td>
+									<td class="edd_cart_item_price">
+										N/A
+									</td>
+								</tr>
+								
+								<!-- cart item 3 -->
+								<tr class="edd_cart_item">
+									<td class="edd_cart_item_name">
+										<div class="edd_cart_item_image">
+											<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
+										</div>
+										<span class="edd_checkout_cart_item_title">Paseo de mascota</span>
+									</td>
+									<td class="edd_cart_item_price">
+										20/Mayo/2014
+									</td>
+									<td class="edd_cart_item_price">
+										Jimena Alba
+									</td>
+									<td class="edd-item-quantity">
+										Cerrado				  							  							
+									</td>
+									<td class="edd_cart_item_price">
+										5
+									</td>
+								</tr>
+								
+								<!-- cart item 4 -->
+								<tr class="edd_cart_item">
+									<td class="edd_cart_item_name">
+										<div class="edd_cart_item_image">
+											<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
+										</div>
+										<span class="edd_checkout_cart_item_title">Paseo de mascota</span>
+									</td>
+									<td class="edd_cart_item_price">
+										25/Enero/2014
+									</td>
+									<td class="edd_cart_item_price">
+										Arantxa Viladomat
+									</td>
+									<td class="edd-item-quantity">
+				  						Cancelado
+									</td>
+									<td class="edd_cart_item_price">
+										2
+									</td>
+								</tr>				
+								</tbody>
+								
+								</table>
+							</div>
+						</form>
+					</div>
+
+					<div class="clear">
+						</div>
+						<div align="center">
+							<div class='pagination'>
+								<span class='current'>1</span><a href='#' class='inactive'>2</a>
+							</div>
+						</div>
+				</div>				
+				<!-- MAIN CONTENT ENDS -->
+					
+				</div>				
+			</div>
+		</div>		
+		
+		<!-- FOOTER
+		================================================== -->
+		<footer class="themefooter section medium-padding bg-graphite">
+		<div class="container">
+			<div class="section-inner row">
+				
+				<div class="column column-1 col-md-4 rightbd">
+					<div class="widgets">
+						<div class="widget widget_text">
+							<div class="widget-content">
+								<h3 class="widget-title">Preguntas Frecuentes</h3>
+								<div class="textwidget">
+									<ul class="edd-taxonomy-widget">
+										<li>
+											<a href="about.html"> ¿Qué tengo que hacer para ofrecer un servicio?</a>
+										</li>
+										<li>
+											<a href="about.html"> ¿Cuál es el medio de pago?</a>
+										</li>
+										<li>
+											<a href="about.html"> ¿Qué tan protegida está mi información?</a>
+										</li>
+										<li>
+											<a href="about.html"><b>Ir a Preguntas Frecuentes</b></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="clear">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- footer a-->
+				<div class="column column-1 col-md-4 rightbd">
+					<div class="widgets">
+						<div class="widget widget_edd_categories_tags_widget">
+							<div class="widget-content">
+								<h3 class="widget-title">Categorías de Servicios</h3>
+								<ul class="edd-taxonomy-widget">
+									<li><a id="jardineria" href="servicelist.html">Jardinería</a></li>
+									<li><a id="limpieza" href="servicelist.html">Limpieza del Hogar</a></li>
+									<li><a id="ninera" href="servicelist.html">Niñera</a></li>
+									<li><a id="mascotas" href="servicelist.html">Cuidado de mascotas</a></li>
+									<li><a id="comida" href="servicelist.html">Comida</a></li>
+									<li><a id="otros" href="servicelist.html">Otros servicios</a></li>
+								</ul>
+							</div>
+							<div class="clear">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- footer b-->
+				<div class="column column-1 col-md-4 rightbd">
+					<div class="widgets">
+						<div class="widget widget_text">
+							<div class="widget-content">
+								<h3 class="widget-title">ACERCA DE HOUSE GURÚ</h3>
+								<div class="textwidget">
+									<p>En House Gurú podrás encontrar una variedad de servicios para tu hogar de manera fácil y rápida.
+									</p>
+									<p>Comprar es tan sencillo como dar un click. ¿Para qué pasar horas haciendo llamadas para contratar un servicio? ¡Ahora con House Gurú solo te tomará un par de minutos!</p>
+								</div>
+							</div>
+							<div class="clear">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /footer-c -->
+				<div class="clear">
+				</div>
+			</div>
+			<!-- /footer-inner -->
+		</div>
+		<!-- /grid -->
+		<div class="sectioncredits">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<span class="credits-left fleft">
+						2015 &copy; All Rights Reserved, WowThemes.net </span>
+						<ul class="footermenu fright">
+							<li><a href="index.html">Inicio</a></li>
+							<li><a href="categories.html">Sercivios</a></li>
+							<li><a href="offerservice.html">Ofecer Servicios</a></li>
+						</ul>
+					</div>
+					<div class="clear">
+					</div>
+				</div>
+			</div>
+			<!-- /grid -->
+		</div>
+		<!-- /sectioncredits -->
+		</footer>
+		<!-- /footer -->
+		
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>2w
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/SmoothScroll.js'></script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/init.js'></script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/anim.js'></script>
+	</div>
+</body>
+</html>

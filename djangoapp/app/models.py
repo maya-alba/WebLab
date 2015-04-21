@@ -1,13 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.conf import settings
 
-class User(models.Model):
-    email = models.EmailField(max_length = 70, primary_key = True)
-    password = models.CharField(max_length = 15)
-    name = models.CharField("Primer nombre", max_length = 30)
-    lastName = models.CharField("Apellido del usuario", max_length = 30)
-    rating = models.IntegerField(blank = True, null = True)
-    profileImage = models.ImageField()
-class OfferedService(models.Model):	
+class AppUser(models.Model):
+    user = models.ForeignKey(User)
+    profileImage = models.ImageField(upload_to = settings.MEDIA_ROOT + "images")
+class OfferedService(models.Model):
     seviceID = models.AutoField(primary_key = True)
     user_email = models.ForeignKey(User)
     title = models.CharField(max_length = 45)
@@ -24,6 +22,7 @@ class OfferedService(models.Model):
     descripton = models.TextField()
     service_email = models.EmailField(max_length = 70)
     telephone = models.CharField(max_length = 15)
+    rating = models.IntegerField(blank = True, null = True)
 class PurchasedService(models.Model):
     purchased_service_id = models.AutoField(primary_key = True)
     client_email =  models.ForeignKey(User)
@@ -42,3 +41,4 @@ class PurchasedService(models.Model):
         (CLOSED, 'Cerrado'),
     )
     status = models.IntegerField(choices = VALID_STATES_OPTIONS, default=ORDER)
+    rating = models.IntegerField(blank = True, null = True)
