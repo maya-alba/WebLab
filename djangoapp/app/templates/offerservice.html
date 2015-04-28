@@ -10,13 +10,13 @@
 	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/bootstrap.min.css' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ MEDIA_URL }}css/style.css' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/font-awesome.css' type='text/css' media='all'/>
-	
+
 	<!-- UNCOMMENT THE FOLLOWING LINE TO ACTIVATE THE BOXED LAYOUT (see the documentation for more)-->
-	
+
 	<!--
 	<link href="assets/css/boxed.css" rel="stylesheet">
-	-->	
-	
+	-->
+
 	<!-- CHANGE THEME SKIN COLOR HERE (replace blue with any other color from assets/css/skins/ folder) -->
 	<link href="{{ MEDIA_URL }}assets/css/skins/bluedark.css" rel="stylesheet">
 
@@ -36,33 +36,33 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href='index.html'>
+					<a class="navbar-brand" href='/'>
 					<img alt="House Gurú" src="{{ MEDIA_URL }}assets/img/logo.png"/>
 					</a>
 				</div>
 				<!-- Menu -->
 				<div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
 					<ul id="menu-top" class="nav navbar-nav navbar-right">
-						<li><a href="index.html">Inicio</a></li>
-						<li><a href="categories.html">Servicios</a></li>
-						<li class="active"><a href="offerservice.html">Ofrecer Servicio</a></li>
-						<li><a href="about.html">Quiénes somos</a></li>
-						<li><a href="checkout.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-						<li class="dropdown"><a href="#">Hola Maya!</a>
+						<li><a href="/">Inicio</a></li>
+						<li><a href="/categories">Servicios</a></li>
+						<li class="active"><a href="/offerservice">Ofrecer Servicio</a></li>
+						<li><a href="/about">Quiénes somos</a></li>
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						<li class="dropdown"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
-								<li><a href="account.html">Mi cuenta</a></li>
-								<li><a href="index.html">Cerrar Sesión</a></li>								
+								<li><a href="/account">Mi cuenta</a></li>
+								<li><a href="/logout">Cerrar Sesión</a></li>								
 							</ul>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-		
+
 		<!-- PAGE CONTENT
 		================================================== -->
 		<div class="templatemyaccount">
-		
+
 			<!-- TITLE BEGINS -->
 			<div class="headerimage" style="background-image: url(http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2015/03/header.jpg);">
 				<div class="headercontent">
@@ -73,7 +73,7 @@
 									<h1>Ofrecer Servicio</h1>
 								</div>
 								<div class="fright breadc">
-									<a href="index.html">Inicio</a> / Ofrecer Servicio
+									<a href="/">Inicio</a> / Ofrecer Servicio
 								</div>
 							</div>
 						</div>
@@ -81,7 +81,7 @@
 				</div>
 			</div>
 			<!-- TITLE ENDS -->
-			
+
 			<div class="container padbot30">
 
 				<div class="container padtop40 padbot50">
@@ -89,110 +89,46 @@
 						<div class="col-md-1">
 						</div>
 						<div class="col-md-10">
+                        {% if message_return %}
+                        {{ message_return | safe }}
+                        {% else %}
 							<span class="smalltitle">Ofrecer un nuevo servicio</span>
-							<form id="create_service_form" class="edd_form" action="#" method="post">
-								<fieldset> 
+							<form id="add_service_form" class="edd_form" action="#" method="post">{% csrf_token %}
+								<fieldset>
+                                    {% if add_service_form.errors %}
+                                    <p class="errors">
+                                        <font color="red"><b>Por favor corrija los siguientes errores:</b></font>
+                                    <p>
+                                    {% endif %}
+
 									<p id="edd_profile_name_wrap">
-										<label for="service_name"><b>Nombre del servicio:</b></label>
-										<input name="service_name" id="service_name" class="text edd-input form-control" type="text" value="" placeholder="Nombre del servicio"/>
-										<br/>
+                                        {% for field in add_service_form %}
+                                        <p>
+                                            <font color="red">{{ field.errors }}</font>
+                                            <label><b>{{ field.label }}</b></label>
+                                            {% if field == add_service_form.service_is_company %}
+                                                {% for radio in field %}
+                                                    </br>{{ radio }}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% if field == add_service_form.service_type or field == add_service_form.service_price_delimiter or add_service_form.service_state or add_service_form.service_city%}
+                                                    {{ field }}
+                                                {% else %}
+                                                <input id="{{ field.name }}"
+                                                    class="{{ field.field.widget.attrs.class }}"
+                                                    name="{{ field.name }}"
+                                                    title="{{ field.label }}"
+                                                    placeholder="{{ field.help_text }}"
+                                                    {% if field.value %}value="{{ field.value }}"{% endif %}
+                                                />
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    {% endfor %}
 
-										<label for="service_type"><b>Tipo de servicio:</b></label>
-										<select  id="service_type" name="service_type">
-											<option value="0">Seleccionar tipo de servicio</option>
-										    <option value="limpieza">Limpieza del hogar</option>
-										    <option value="jardineria">Jardinería</option>
-										    <option value="ninera">Servicio de Niñera</option>
-										    <option value="mascotas">Mascotas</option>
-										    <option value="comida">Comida</option>
-										    <option value="otros">Otros servicios</option>
-									 	</select>
-
-									 	<div class="row">
-									 		<div class="radio col-md-3">
-											</div>
-										 	<div class="col-md-3">
-											 	<label>
-											    <input type="radio" name="optionsRadios" id="service_company" value="service_company" checked>
-											    Compañía
-											  </label>
-											</div>
-											<div class="col-md-2">
-												  <label>
-											    <input type="radio" name="optionsRadios" id="service_freelanceradioFreelance" value="service_freelance">
-											    Freelance
-											  </label>
-											</div>
-											<div class="radio col-md-4">
-											</div>
-										</div>
-
-										<label for="service_company_name"><b>Nombre compañía:</b></label>
-										<input name="service_company_name" id="service_company_name" class="text edd-input form-control" type="text" value="" placeholder="Nombre de la compañía"/>
-
-										<label for="service_price"><b>Precio:</b></label>
-										<div class="row">
-											<div class="col-md-3">
-												<input name="service_price" id="service_price" class="text edd-input form-control" type="text" value="" placeholder="$"/>
-											</div>
-											<div class="col-md-1">
-												<label for="service_mode"><b> X </b></label>
-											</div>
-											<div class="col-md-2">
-												<select  id="service_mode" name="service_mode">
-											    	<option value="hora">hora</option>
-											    	<option value="dia">día</option>
-											    	<option value="servicio">servicio</option>
-											    	<option value="unidad">unidad</option>
-											    </select>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-4">
-												<label for="service_state"><b> Estado: </b></label>
-												<select  id="service_state" name="service_state">
-												  	<option value="0">Estado</option>
-												    <option value="1">Jalisco</option>
-												    <option value="2">Nuevo León</option>
-												    <option value="3">Aguascalientes</option>
-												    <option value="4">DF</option>
-												</select>
-											</div>
-											<div class="col-md-1">
-											</div>
-											<div class="col-md-4">
-												<label for="service_city"><b> Ciudad: </b></label>
-												<select  id="service_city" name="service_city">
-									  				<option value="0">Ciudad</option>
-												    <option value="1">Guadalajara</option>
-												    <option value="2">Puerto Vallarta</option>
-												    <option value="3">Tlajomulco</option>
-												    <option value="4">Tonalá</option>
-												    <option value="5">Zapopan</option>
-												</select>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-3">
-												<label for="service_image"><b> Seleccionar imagen: </b></label>
-											</div>
-											<div class="col-md-3">
-												<input id="service_image" name="service_image" type="submit" class="edd_submit" value="Examinar"/>
-											</div>
-										</div>
-
-										<label for="service_brief"><b> Breve descripción: </b></label>
-								  		<textarea id="service_brief" name="service_brief" class="form-control text edd-input notResTxtArea" rows="2" maxlength="140"></textarea>
-
-								  		<label for="service_description"><b> Descripción detallada: </b></label>
-								  		<textarea id="service_description" name="service_description" class="form-control text edd-input notResTxtArea" rows="3" maxlength="280"></textarea>
-									</p>
-									<br/>
 									<article class="contentdownloadphp" align="center">
 										<span class="entrybasicaddto">
-										<a id="service_create_button" name="service=create_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Crear Servicio</span></a>
+										<a id="service_create_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Crear Servicio</span></a>
 									</span>
 									</article>
 
@@ -201,25 +137,26 @@
 									</p>-->
 								</fieldset>
 							</form>
+                            {% endif %}
 						</div>
 						<div class="col-md1-">
 						</div>
 					</div>
 				</div>
 
-				
+
 				<div class="row">
 				<!-- MAIN CONTENT BEGINS -->
 				<div class="col-md-12">
 					<div class="clear">
 					</div>
-				</div>				
+				</div>
 				<!-- MAIN CONTENT ENDS -->
-					
-				</div>				
+
+				</div>
 			</div>
-		</div>		
-		
+		</div>
+
 		<!-- CALL TO ACTION
 		================================================== -->
 		<div class="actionbeforefooter text-center">
@@ -241,16 +178,16 @@
 								<div class="textwidget">
 									<ul class="edd-taxonomy-widget">
 										<li>
-											<a href="about.html"> ¿Qué tengo que hacer para ofrecer un servicio?</a>
+											<a href="/about/"> ¿Qué tengo que hacer para ofrecer un servicio?</a>
 										</li>
 										<li>
-											<a href="about.html"> ¿Cuál es el medio de pago?</a>
+											<a href="/about/"> ¿Cuál es el medio de pago?</a>
 										</li>
 										<li>
-											<a href="about.html"> ¿Qué tan protegida está mi información?</a>
+											<a href="/about/"> ¿Qué tan protegida está mi información?</a>
 										</li>
 										<li>
-											<a href="about.html"><b>Ir a Preguntas Frecuentes</b></a>
+											<a href="/about/"><b>Ir a Preguntas Frecuentes</b></a>
 										</li>
 									</ul>
 								</div>
@@ -267,12 +204,12 @@
 							<div class="widget-content">
 								<h3 class="widget-title">Categorías de Servicios</h3>
 								<ul class="edd-taxonomy-widget">
-									<li><a id="jardineria" href="servicelist.html">Jardinería</a></li>
-									<li><a id="limpieza" href="servicelist.html">Limpieza del Hogar</a></li>
-									<li><a id="ninera" href="servicelist.html">Niñera</a></li>
-									<li><a id="mascotas" href="servicelist.html">Cuidado de mascotas</a></li>
-									<li><a id="comida" href="servicelist.html">Comida</a></li>
-									<li><a id="otros" href="servicelist.html">Otros servicios</a></li>
+									<li><a id="jardineria" href="/servicelist/JA">Jardinería</a></li>
+									<li><a id="limpieza" href="/servicelist/LO">Limpieza del Hogar</a></li>
+									<li><a id="ninera" href="/servicelist/SN">Niñera</a></li>
+									<li><a id="mascotas" href="/servicelist/MA">Cuidado de mascotas</a></li>
+									<li><a id="comida" href="/servicelist/CO">Comida</a></li>
+									<li><a id="otros" href="/servicelist/OT">Otros servicios</a></li>
 								</ul>
 							</div>
 							<div class="clear">
@@ -311,9 +248,9 @@
 						<span class="credits-left fleft">
 						2015 &copy; All Rights Reserved, WowThemes.net </span>
 						<ul class="footermenu fright">
-							<li><a href="index.html">Inicio</a></li>
-							<li><a href="categories.html">Sercivios</a></li>
-							<li><a href="offerservice.html">Ofecer Servicios</a></li>
+							<li><a href="/">Inicio</a></li>
+							<li><a href="/categories/">Sercivios</a></li>
+							<li><a href="/offerservice/">Ofecer Servicios</a></li>
 						</ul>
 					</div>
 					<div class="clear">
@@ -324,9 +261,17 @@
 		</div>
 		<!-- /sectioncredits -->
 		</footer>
+
 		<!-- /footer -->
-		
+
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+        <script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$("#service_create_button").click(function(){
+					$("#add_service_form").submit();
+				});
+			});
+		</script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
@@ -36,21 +36,21 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href='index.html'>
+					<a class="navbar-brand" href='/'>
 					<img alt="House Gurú" src="{{ MEDIA_URL }}assets/img/logo.png"/>
 					</a>
 				</div>
 				<!-- Menu -->
 				<div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
 					<ul id="menu-top" class="nav navbar-nav navbar-right">
-						<li><a href="index.html">Inicio</a></li>
-						<li><a href="categories.html">Servicios</a></li>
-						<li><a href="offerservice.html">Ofrecer Servicio</a></li>
-						<li><a href="about.html">Quiénes somos</a></li>
+						<li><a href="/">Inicio</a></li>
+						<li><a href="/categories">Servicios</a></li>
+						<li><a href="/offerservice">Ofrecer Servicio</a></li>
+						<li><a href="/about">Quiénes somos</a></li>
 						<li class="dropdown active"><a href="#">Iniciar Sesión</a>
 							<ul class="dropdown-menu">
-								<li><a href="register.html">Registrarse</a></li>
-								<li><a href="login.html">Login</a></li>								
+								<li><a href="/register">Registrarse</a></li>
+								<li><a href="/login">Login</a></li>								
 							</ul>
 						</li>
 					</ul>
@@ -72,7 +72,7 @@
 									<h1>Regístrate como Gurú</h1>
 								</div>
 								<div class="fright breadc">
-									<a href="index.html">Inicio</a> / Registrar Cuenta
+									<a href="/index">Inicio</a> / Registrar Cuenta
 								</div>
 							</div>
 						</div>
@@ -87,37 +87,40 @@
 				<div class="col-md-3">
 				</div>	
 				<div class="col-md-6">
+                    {% if message_return %}
+                    {{ message_return | safe }}
+                    {% else %}
 					<span class="smalltitle">Crear Cuenta Nueva</span>
-					<form id="register_form" class="edd_form" action="#" method="post">
+					<form id="register_form" class="edd_form" action="#" method="post">{% csrf_token %}
 						<fieldset>
-							<p>
-								<label for="user_name"><b>Nombre</b></label>
-								<input id="user_name" class="required edd-input form-control" type="text" name="user_name" title="Nombre" placeholder="Nombre del nuevo Gurú"/>
-							</p>
-							<p>
-								<label for="user_lname"><b>Apellido</b></label>
-								<input id="user_lname" class="required edd-input form-control" type="text" name="user_lname" title="Apellido" placeholder="Apellido"/>
-							</p>
-							<p>
-								<label for="user_email"><b>E-mail</b></label>
-								<input id="user_email" class="required edd-input form-control" type="email" name="user_email" title="Email" placeholder="E-mail"/>
-							</p>
-							<p>
-								<label for="user_password"><b>Password</b></label>
-								<input id="user_password" class="password required edd-input form-control" type="password" name="user_password" placeholder="Password"/>
-							</p>
-							<p>
-								<label for="user_password2"><b>Confirmar Password</b></label>
-								<input id="user_password2" class="password required edd-input form-control" type="password" name="user_password2" placeholder="Confirmar password"/>
-							</p>
+                            {% if register_form.errors %}
+                            <p class="errors">
+                                Por favor corrija los siguientes errores:
+                            <p>
+                            {% endif %}
+                            {% for field in register_form %}
+                                <p>
+                                    {{ field.errors }}
+                                    <label><b>{{ field.label }}</b></label>
+                                    <input id="{{ field.name }}"
+                                        class="{{ field.field.widget.attrs.class }}"
+                                        {% if 'password' in field.name %}type="password"{% else %}type="text"{% endif %}
+                                        name="{{ field.name }}"
+                                        title="{{ field.label }}"
+                                        placeholder="{{ field.help_text }}"
+                                        {% if field.value %}value="{{ field.value }}"{% endif %}
+                                    />
+                                </p>
+                            {% endfor %}
 							<br/>
 							<article class="contentdownloadphp" align="center">
 									<span class="entrybasicaddto">
-									<a href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Registrar</span></a>
+									<a id="register_submit" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Registrar</span></a>
 								</span>
 							</article>
 						</fieldset>
 					</form>
+                    {% endif %}
 				</div>	
 				<div class="col-md-3">
 				</div>				
@@ -143,16 +146,16 @@
 								<div class="textwidget">
 									<ul class="edd-taxonomy-widget">
 										<li>
-											<a href="about.html"> ¿Qué tengo que hacer para ofrecer un servicio?</a>
+											<a href="/about/"> ¿Qué tengo que hacer para ofrecer un servicio?</a>
 										</li>
 										<li>
-											<a href="about.html"> ¿Cuál es el medio de pago?</a>
+											<a href="/about/"> ¿Cuál es el medio de pago?</a>
 										</li>
 										<li>
-											<a href="about.html"> ¿Qué tan protegida está mi información?</a>
+											<a href="/about/"> ¿Qué tan protegida está mi información?</a>
 										</li>
 										<li>
-											<a href="about.html"><b>Ir a Preguntas Frecuentes</b></a>
+											<a href="/about/"><b>Ir a Preguntas Frecuentes</b></a>
 										</li>
 									</ul>
 								</div>
@@ -169,12 +172,12 @@
 							<div class="widget-content">
 								<h3 class="widget-title">Categorías de Servicios</h3>
 								<ul class="edd-taxonomy-widget">
-									<li><a id="jardineria" href="servicelist.html">Jardinería</a></li>
-									<li><a id="limpieza" href="servicelist.html">Limpieza del Hogar</a></li>
-									<li><a id="ninera" href="servicelist.html">Niñera</a></li>
-									<li><a id="mascotas" href="servicelist.html">Cuidado de mascotas</a></li>
-									<li><a id="comida" href="servicelist.html">Comida</a></li>
-									<li><a id="otros" href="servicelist.html">Otros servicios</a></li>
+									<li><a id="jardineria" href="/servicelist/JA">Jardinería</a></li>
+									<li><a id="limpieza" href="/servicelist/LO">Limpieza del Hogar</a></li>
+									<li><a id="ninera" href="/servicelist/SN">Niñera</a></li>
+									<li><a id="mascotas" href="/servicelist/MA">Cuidado de mascotas</a></li>
+									<li><a id="comida" href="/servicelist/CO">Comida</a></li>
+									<li><a id="otros" href="/servicelist/OT">Otros servicios</a></li>
 								</ul>
 							</div>
 							<div class="clear">
@@ -213,9 +216,9 @@
 						<span class="credits-left fleft">
 						2015 &copy; All Rights Reserved, WowThemes.net </span>
 						<ul class="footermenu fright">
-							<li><a href="index.html">Inicio</a></li>
-							<li><a href="categories.html">Sercivios</a></li>
-							<li><a href="offerservice.html">Ofecer Servicios</a></li>
+							<li><a href="/">Inicio</a></li>
+							<li><a href="/categories/">Sercivios</a></li>
+							<li><a href="/offerservice/">Ofecer Servicios</a></li>
 						</ul>
 					</div>
 					<div class="clear">
@@ -226,11 +229,19 @@
 		</div>
 		<!-- /sectioncredits -->
 		</footer>
+
 		<!-- /footer -->
 
 		<!-- SCRIPTS
 		================================================== -->			
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$("#register_submit").click(function(){
+					$("#register_form").submit();
+				});
+			});
+		</script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>
