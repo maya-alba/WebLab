@@ -10,13 +10,13 @@
 	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/bootstrap.min.css' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ MEDIA_URL }}css/style.css' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/font-awesome.css' type='text/css' media='all'/>
-	
+
 	<!-- UNCOMMENT THE FOLLOWING LINE TO ACTIVATE THE BOXED LAYOUT (see the documentation for more)-->
-	
+
 	<!--
 	<link href="assets/css/boxed.css" rel="stylesheet">
-	-->	
-	
+	-->
+
 	<!-- CHANGE THEME SKIN COLOR HERE (replace blue with any other color from assets/css/skins/ folder) -->
 	<link href="{{ MEDIA_URL }}assets/css/skins/bluedark.css" rel="stylesheet">
 
@@ -47,22 +47,22 @@
 						<li><a href="/categories">Servicios</a></li>
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
-						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown active"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
-								<li><a href="/logout">Cerrar Sesión</a></li>								
+								<li><a href="/logout">Cerrar Sesión</a></li>
 							</ul>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-		
+
 		<!-- PAGE CONTENT
 		================================================== -->
 		<div class="templatemyaccount">
-		
+
 			<!-- TITLE BEGINS -->
 			<div class="headerimage" style="background-image: url(http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2015/03/header.jpg);">
 				<div class="headercontent">
@@ -81,7 +81,7 @@
 				</div>
 			</div>
 			<!-- TITLE ENDS -->
-			
+
 			<div class="container padbot30">
 
 				<div class="container padtop40 padbot50">
@@ -89,74 +89,151 @@
 						<div class="col-md-1">
 						</div>
 						<div class="col-md-10">
-							<span class="smalltitle">Ofrecer un nuevo servicio</span>
-							<form id="create_service_form" class="edd_form" action="#" method="post">
-								<fieldset> 
+							<span class="smalltitle">Editar mi servicio</span>
+							{% if return_message %}<p class="message">{{ return_message | safe}}</p>{% endif %}
+							<form enctype="multipart/form-data" id="edit_service_form" class="edd_form" action="" method="post"> {% csrf_token %}
+								<fieldset class="gray_back">
+
+								{% if edit_service_form.errors %}
+                                    <p class="errors">
+                                        <font color="red"><b>Por favor corrija los siguientes errores:</b></font>
+                                    <p>
+                                    {% endif %}
+
+
+
 									<p id="edd_profile_name_wrap">
-										<label for="service_name"><b>Nombre del servicio:</b></label>
-										<input name="service_name" id="service_name" class="text edd-input form-control" type="text" value="" placeholder="Nombre del servicio"/>
+                                        {% for field in edit_service_form %}
+                                            {% if field.name == "service_title" %}
+                                                {% if field.errors %}
+                                             	<font color="red">{{ field.errors }}</font>
+                                                {% endif %}
+                                            {% endif %}
+                                         {% endfor %}
+										<label for="service_title"><b>Nombre del servicio:</b></label>
+										<input name="service_title" id="service_name" class="text edd-input form-control" type="text" value="{{ service.title }}"/>
 										<br/>
 
-										<label for="service_type"><b>Tipo de servicio:</b></label>
+                                        {% for field in edit_service_form %}
+                                            {% if field.name == "service_type"%}
+                                                {% if field.errors %}
+                                             	<font color="red">{{ field.errors }}</font>
+                                                {% endif %}
+                                            {% endif %}
+                                         {% endfor %}
+                                        <label for="service_type"><b>Tipo de servicio:</b></label>
 										<select  id="service_type" name="service_type">
-											<option value="0">Seleccionar tipo de servicio</option>
-										    <option value="limpieza">Limpieza del hogar</option>
-										    <option value="jardineria">Jardinería</option>
-										    <option value="ninera">Servicio de Niñera</option>
-										    <option value="mascotas">Mascotas</option>
-										    <option value="comida">Comida</option>
-										    <option value="otros">Otros servicios</option>
+											{% for st in service_types %}
+											<option value="{{ st.0 }}" {%if service.service_type == st.0 %}selected{% endif %}>{{ st.1 }}</option>
+										    {% endfor %}
 									 	</select>
 
+
+                                        {% for field in edit_service_form %}
+                                            {% if field.name == "service_is_company"%}
+                                                {% if field.errors %}
+                                             	<font color="red">{{ field.errors }}</font>
+                                                {% endif %}
+                                            {% endif %}
+                                         {% endfor %}
 									 	<div class="row">
-									 		<div class="radio col-md-3">
-											</div>
-										 	<div class="col-md-3">
-											 	<label>
-											    <input type="radio" name="optionsRadios" id="service_company" value="service_company" checked>
-											    Compañía
-											  </label>
-											</div>
-											<div class="col-md-2">
-												  <label>
-											    <input type="radio" name="optionsRadios" id="service_freelanceradioFreelance" value="service_freelance">
-											    Freelance
-											  </label>
-											</div>
-											<div class="radio col-md-4">
-											</div>
+									 		<div class="col-md-1">
+									 		</div>
+									 		<div class="col-md-3">
+									 		<label for="id_service_is_company_0">
+                                            <input id="id_service_is_company_0" type="radio" value="True" name="service_is_company" {% if service.company %}checked{% endif %}>
+                                            Compañía
+                                            </label>
+                                        	</div>
+                                            <div class="col-md-3">
+                                            <label for="id_service_is_company_1">
+                                            <input id="id_service_is_company_1" type="radio" value="False" name="service_is_company" {% if not service.company %}checked{% endif %}>
+                                            Freelance
+                                            </label>
+                                        </div>
 										</div>
 
-										<label for="service_company_name"><b>Nombre compañía:</b></label>
-										<input name="service_company_name" id="service_company_name" class="text edd-input form-control" type="text" value="" placeholder="Nombre de la compañía"/>
+										<label id="company_name_l" for="service_company_name"><b>Nombre compañía: </b></label>
+										<input name="service_company_name" id="service_company_name" class="text edd-input form-control" type="text" value="{{ service.company_name }}"/>
 
+                                        {% for field in edit_service_form %}
+                                            {% if field.name == "service_email" %}
+                                                {% if field.errors %}
+                                             	<font color="red">{{ field.errors }}</font>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+										<label for="service_email"><b>Email del servicio:</b></label>
+										<input name="service_email" id="service_email" class="text edd-input form-control" type="text" value="{{ service.service_email }}"/>
+
+                                        {% for field in edit_service_form %}
+                                            {% if field.name == "service_telephone" %}
+                                                {% if field.errors %}
+                                             	<font color="red">{{ field.errors }}</font>
+                                                {% endif %}
+                                            {% endif %}
+                                         {% endfor %}
+										<label for="service_telephone"><b>Teléfono:</b></label>
+										<input name="service_telephone" id="service_telephone" class="text edd-input form-control" type="text" value="{{ service.telephone }}"/>
+
+                                        {% for field in edit_service_form %}
+                                            {% if field.name == "service_account"%}
+                                                {% if field.errors %}
+                                             	<font color="red">{{ field.errors }}</font>
+                                                {% endif %}
+                                            {% endif %}
+                                         {% endfor %}
+										<label for="service_account"><b>Número de cuenta:</b></label>
+										<input name="service_account" id="service_account" class="text edd-input form-control" type="text" value="{{ service.account }}"/>
+
+                                        {% for field in edit_service_form %}
+                                            {% if field.name == "service_price" %}
+                                                {% if field.errors %}
+                                             	<font color="red">El precio es requerido</font>
+                                                {% endif %}
+                                            {% endif %}
+                                            {% if field.name == "service_price_delimiter" %}
+                                                {% if field.errors %}
+                                             	<font color="red">Seleccione un delimitador de precio</font>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
 										<label for="service_price"><b>Precio:</b></label>
 										<div class="row">
 											<div class="col-md-3">
-												<input name="service_price" id="service_price" class="text edd-input form-control" type="text" value="" placeholder="$"/>
+												<input name="service_price" id="service_price" class="text edd-input form-control" type="text" value=" {{service.price }}"/>
 											</div>
 											<div class="col-md-1">
-												<label for="service_mode"><b> X </b></label>
+												<label for="service_price_delimiter"><b> X </b></label>
 											</div>
 											<div class="col-md-2">
-												<select  id="service_mode" name="service_mode">
-											    	<option value="hora">hora</option>
-											    	<option value="dia">día</option>
-											    	<option value="servicio">servicio</option>
-											    	<option value="unidad">unidad</option>
+												<select  id="service_price_delimiter" name="service_price_delimiter">
+													{% for del in price_delimiters %}
+											    	<option value="{{ del.0 }}"  {% if service.price_delimiter == del.0 %} selected {% endif %} >{{ del.1 }}</option>
+											    	{% endfor %}
 											    </select>
 											</div>
 										</div>
 
+                                        {% for field in edit_service_form %}
+                                            {% if field.name == "service_state"%}
+                                                {% if field.errors %}
+                                             	<font color="red">Elija un estado</font>
+                                                {% endif %}
+                                            {% endif %}
+                                            {% if field.name == "service_city" %}
+                                                {% if field.errors %}
+                                             	<font color="red">Elija una ciudad</font>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
 										<div class="row">
 											<div class="col-md-4">
 												<label for="service_state"><b> Estado: </b></label>
 												<select  id="service_state" name="service_state">
-												  	<option value="0">Estado</option>
-												    <option value="1">Jalisco</option>
-												    <option value="2">Nuevo León</option>
-												    <option value="3">Aguascalientes</option>
-												    <option value="4">DF</option>
+												  	{% for state in states %}
+											    	<option value="{{ state.0 }}"  {% if service.state == state.0 %} selected {% endif %} >{{ state.1 }}</option>
+											    	{% endfor %}
 												</select>
 											</div>
 											<div class="col-md-1">
@@ -164,35 +241,59 @@
 											<div class="col-md-4">
 												<label for="service_city"><b> Ciudad: </b></label>
 												<select  id="service_city" name="service_city">
-									  				<option value="0">Ciudad</option>
-												    <option value="1">Guadalajara</option>
-												    <option value="2">Puerto Vallarta</option>
-												    <option value="3">Tlajomulco</option>
-												    <option value="4">Tonalá</option>
-												    <option value="5">Zapopan</option>
+									  				{% for city in cities %}
+											    	<option value="{{ city.0 }}"  {% if service.city == city.0 %} selected {% endif %} >{{ city.1 }}</option>
+											    	{% endfor %}
 												</select>
 											</div>
 										</div>
 
-										<div class="row">
-											<div class="col-md-3">
-												<label for="service_image"><b> Seleccionar imagen: </b></label>
-											</div>
-											<div class="col-md-3">
-												<input id="service_image" name="service_image" type="submit" class="edd_submit" value="Examinar"/>
-											</div>
-										</div>
+                                        {% for field in edit_service_form %}
+                                        {% if field.name == "service_image"%}
+                                            {% if field.errors %}
+                                             	<font color="red">{{ field.errors }}</font>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                        <label for="service_image"><b> Seleccionar imagen: </b></label>
 
-										<label for="service_brief"><b> Breve descripción: </b></label>
-								  		<textarea id="service_brief" name="service_brief" class="form-control text edd-input notResTxtArea" rows="2" maxlength="140"></textarea>
+                                        <div class="row">
+												<div class= "col-md-5">
+													<img width="140" height="100" src="{{ MEDIA_URL }}{{ service.get_image }}" class="attachment-post-thumbnail wp-post-image" alt="{{ service.title }}"/>
+												</div>
+												<div class= "col-md-7">
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-8">
+													<input id="id_service_image" style="background-color:#FFFFFF;" name="service_image" type="file" alue="{{ service.service_image }}"/>
+												</div>
+											</div>
 
+                                        {% for field in edit_service_form %}
+                                        {% if field.name == "service_brief_desc" %}
+                                            {% if field.errors %}
+                                             	<font color="red">{{ field.errors }}</font>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+										<label for="service_brief_desc"><b> Breve descripción: </b></label>
+								  		<textarea id="service_brief_desc" name="service_brief_desc" class="form-control text edd-input notResTxtArea" rows="2" maxlength="140"> {{ service.brief_description }}</textarea>
+
+                                        {% for field in edit_service_form %}
+                                        {% if field.name == "service_description"%}
+                                            {% if field.errors %}
+                                             	<font color="red">{{ field.errors }}</font>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
 								  		<label for="service_description"><b> Descripción detallada: </b></label>
-								  		<textarea id="service_description" name="service_description" class="form-control text edd-input notResTxtArea" rows="3" maxlength="280"></textarea>
+								  		<textarea id="service_description" name="service_description" class="form-control text edd-input notResTxtArea" rows="3" maxlength="280">{{ service.description }}</textarea>
 									</p>
 									<br/>
 									<article class="contentdownloadphp" align="center">
 										<span class="entrybasicaddto">
-										<a id="service_create_button" name="service=create_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Crear Servicio</span></a>
+										<a id="service_update_button" name="service_edit_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white"> <i class="fa fa-edit"></i>  Editar Servicio</span></a>
 									</span>
 									</article>
 
@@ -207,19 +308,19 @@
 					</div>
 				</div>
 
-				
+
 				<div class="row">
 				<!-- MAIN CONTENT BEGINS -->
 				<div class="col-md-12">
 					<div class="clear">
 					</div>
-				</div>				
+				</div>
 				<!-- MAIN CONTENT ENDS -->
-					
-				</div>				
+
+				</div>
 			</div>
-		</div>		
-		
+		</div>
+
 		<!-- CALL TO ACTION
 		================================================== -->
 		<div class="actionbeforefooter text-center">
@@ -232,7 +333,7 @@
 		<footer class="themefooter section medium-padding bg-graphite">
 		<div class="container">
 			<div class="section-inner row">
-				
+
 				<div class="column column-1 col-md-4 rightbd">
 					<div class="widgets">
 						<div class="widget widget_text">
@@ -326,8 +427,23 @@
 		</footer>
 
 		<!-- /footer -->
-		
+
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$("#id_service_is_company_1").click(function(){
+					$("#service_company_name").hide();
+					$("#company_name_l").hide();
+				});
+				$("#id_service_is_company_0").click(function(){
+					$("#service_company_name").show();
+					$("#company_name_l").show();
+				});
+				$("#service_update_button").click(function(){
+					$("#edit_service_form").submit();
+				});
+			});
+		</script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>

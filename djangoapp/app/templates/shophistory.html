@@ -45,7 +45,7 @@
 						<li><a href="/categories">Servicios</a></li>
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
-						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown active"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -104,143 +104,53 @@
 								</tr>
 								</thead>
 								<tbody>
-								
-								<!-- cart item 1 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="edd_cart_item_image">
-											<img id="service_image" name="service_image" width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
-										</div>
-										<span class="edd_checkout_cart_item_title">Paseo de mascota</span>
-									</td>
-									<td id="service_date" name="service_date">
-										5/Febrero/2015
-									</td>
-									<td class="edd-item-quantity">
-										<article class="contentdownloadphp">
-										<aside id="text-4" class="widget widget_text">
-											<h1 class="widget-title section-title sortitemsarea"><span>Ordenar por</span></h1>
-											<div class="textwidget">
-												<form id="order_by_form" method="GET" action="#" class="wowsortitems">    
-													<select name="order_service" id="order_service" >
-														<option value="0">Ordenar por</option>
-														<option value="rating">Rating</option>
-														<option value="ubicacion">Ubicación</option>
-														<option value="precio">Precio</option>
-													</select>
-												   <noscript>
-														<input type="submit" value="Submit">
-												   </noscript>
-												 </form>
+									{% for service in services %}
+									<!-- cart item -->
+									<tr class="edd_cart_item">
+										<td class="edd_cart_item_name">
+											<div class="edd_cart_item_image">
+												<img width="25" height="25" src="
+                                                    {% if service.seller_email.service_image %}
+                                                        {{ MEDIA_URL }}{{ service.seller_email.get_image }}
+                                                    {% else %}
+                                                        {{ MEDIA_URL }}offered_service/default.jpg
+                                                    {% endif %}
+                                                    "
+                                                   class="attachment-25x25 wp-post-image" alt="{{ service.seller_email.service_image }}"/>
 											</div>
-										</aside>
-									</article>
-										<div class="btn-group">
-				  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Cerrado <span class="caret"></span></button>
-				  							<ul class="dropdown-menu" role="menu">
-												<li><a value="1">Pagado</a></li>
-												<li><a value="2">Enviado</a></li>
-												<li><a value="3">Entregado</a></li>
-												<li><a value="4">Esperando Calificación</a></li>
-												<li><a value="5">Cerrado</a></li>
-												<li><a value="6">Cancelado</a></li>
-				  							</ul>
-										</div>
-									</td>
-									<td id="service_rating" name="service_rating">
-										N/A
-									</td>
-								</tr>
-								
-								<!-- cart item 2 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="edd_cart_item_image">
-											<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
-										</div>
-										<span class="edd_checkout_cart_item_title">Servicio de Niñera Lulu</span>
-									</td>
-									<td class="edd_cart_item_price">
-										26/Mayo/2014
-									</td>
-									<td class="edd-item-quantity">
-										<div class="btn-group">
-				  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Cerrado <span class="caret"></span></button>
-				  							<ul class="dropdown-menu" role="menu">
-												<li><a value="1">Pagado</a></li>
-												<li><a value="2">Enviado</a></li>
-												<li><a value="3">Entregado</a></li>
-												<li><a value="4">Esperando Calificación</a></li>
-												<li><a value="5">Cerrado</a></li>
-												<li><a value="6">Cancelado</a></li>
-				  							</ul>
-										</div>
-									</td>
-									<td class="edd-item-quantity">
-										N/A
-									</td>
-
-								</tr>
-								
-								<!-- cart item 3 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="edd_cart_item_image">
-											<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
-										</div>
-										<span class="edd_checkout_cart_item_title">Paseo de mascota</span>
-									</td>
-									<td class="edd_cart_item_price">
-										20/Mayo/2014
-									</td>
-									<td class="edd-item-quantity">
-										<div class="btn-group">
-				  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Entregado <span class="caret"></span></button>
-				  							<ul class="dropdown-menu" role="menu">
-												<li><a value="1">Pagado</a></li>
-												<li><a value="2">Enviado</a></li>
-												<li><a value="3">Entregado</a></li>
-												<li><a value="4">Esperando Calificación</a></li>
-												<li><a value="5">Cerrado</a></li>
-												<li><a value="6">Cancelado</a></li>				  							
-											</ul>
-										</div>
-									</td>
-									<td class="edd-item-quantity">
-										N/A
-									</td>
-
-								</tr>
-								
-								<!-- cart item 4 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="edd_cart_item_image">
-											<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
-										</div>
-										<span class="edd_checkout_cart_item_title">Paseo de mascota</span>
-									</td>
-									<td class="edd_cart_item_price">
-										25/Enero/2014
-									</td>
-									<td class="edd-item-quantity">
-										<div class="btn-group">
-				  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Esperando Calificación <span class="caret"></span></button>
-				  							<ul class="dropdown-menu" role="menu">
-												<li><a value="1">Pagado</a></li>
-												<li><a value="2">Enviado</a></li>
-												<li><a value="3">Entregado</a></li>
-												<li><a value="4">Esperando Calificación</a></li>
-												<li><a value="5">Cerrado</a></li>
-												<li><a value="6">Cancelado</a></li>
-				  							</ul>
-										</div>
-									</td>
-									<td class="edd-item-quantity">
-										N/A
-									</td>
-
-								</tr>				
+											<span class="edd_checkout_cart_item_title">{{ service.seller_email.title }}</span>
+										</td>
+										<td id="service_date" name="service_date">
+											{{ service.date}}
+										</td>
+										<td class="edd-item-quantity">
+											<div class="btn-group">
+					  							{% if  service.status == 0 %}
+					  								Comprado
+					  							{% elif service.status == 1 %}
+					  								<button onclick="refresh({{ service.purchased_service_id}})" type="button" class="btn btn-info dropdown-toggle"><span class="quantity_of_service">Ya lo recibí</span></button>
+					  							{% elif service.status == 2 %}
+					  								Entregado
+					  							{% else %}
+					  								Cerrado
+					  							{% endif %}
+											</div>
+										</td>
+										<td id="service_rating" name="service_rating">
+											{% if service.status == 2 %}
+												<select onchange="rating({{ service.purchased_service_id}})" name="rating_eval" id="rating_eval">
+													<option value="1">Pésimo</option>
+													<option value="2">Malo</option>
+													<option value="3">Regular</option>
+													<option value="4">Bueno</option>
+													<option value="5">Excelente</option>
+												</select>
+											{% else %}
+												{{ service.rating }}
+											{% endif %}
+										</td>
+									</tr>
+									{% endfor %}				
 								</tbody>
 								
 								</table>
@@ -358,6 +268,48 @@
 		<!-- /footer -->
 
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+		<script type='text/javascript'>
+            function refresh(id) {
+                if (confirm("¿Está seguro que ya se recibió el servicio?")) {
+                    jQuery.ajax({
+					    url : "/refresh_buy/",
+                        type : "POST",
+                        data : {
+                            'sale_id' : id,
+                            'csrfmiddlewaretoken' : '{{ csrf_token }}'
+                        },
+                        success : function(rc) {
+                            //alert(rc);
+                            window.location.reload(true);
+                        },
+                        error : function(error) {
+                            alert(id);
+                        }
+                    });
+                }
+            }
+            function rating(id) {
+                if (confirm("Una vez seleccionado el rating del servicio ya no lo podrá modifica. ¿Está seguro?")) {
+                    var rating = jQuery("#rating_eval").val();
+                    jQuery.ajax({
+					    url : "/refresh_rating/",
+                        type : "POST",
+                        data : {
+                            'rating' : rating,
+                            'sale_id' : id,
+                            'csrfmiddlewaretoken' : '{{ csrf_token }}'
+                        },
+                        success : function(rc) {
+                            //alert(rc);
+                            window.location.reload(true);
+                        },
+                        error : function(error) {
+                            alert(id);
+                        }
+                    });
+                }
+            }
+        </script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>2w
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>

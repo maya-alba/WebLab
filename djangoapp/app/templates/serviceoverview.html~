@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="shortcut icon" href="{{ MEDIA_URL }}assets/img/favicon.png"/>
+	<title>{{service.title}}</title>
+	<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+	<link rel='stylesheet' href='{{ MEDIA_URL }}edd_templates/edd.css' type='text/css' media='all'/>
+	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/bootstrap.min.css' type='text/css' media='all'/>
+	<link rel='stylesheet' href='{{ MEDIA_URL }}css/style.css' type='text/css' media='all'/>
+	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/font-awesome.css' type='text/css' media='all'/>
+	
+	<!-- UNCOMMENT THE FOLLOWING LINE TO ACTIVATE THE BOXED LAYOUT (see the documentation for more)-->
+	
+	<!--
+	<link href="assets/css/boxed.css" rel="stylesheet">
+	-->	
+	
+	<!-- CHANGE THEME SKIN COLOR HERE (replace blue with any other color from assets/css/skins/ folder) -->
+	<link href="{{ MEDIA_URL }}assets/css/skins/bluedark.css" rel="stylesheet">
+
+</head>
+<body>
+	<div class="boxedlayout">
+
+		<!-- HEADER
+		================================================== -->
+		<nav id="wow-menu" class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href='/'>
+					<img alt="House Gurú" src="{{ MEDIA_URL }}assets/img/logo.png"/>
+					</a>
+				</div>
+				<!-- Menu -->
+				<div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+					<ul id="menu-top" class="nav navbar-nav navbar-right">
+						<li><a href="/">Inicio</a></li>
+						<li class="active"><a href="/categories">Servicios</a></li>
+						<li><a href="/offerservice">Ofrecer Servicio</a></li>
+						<li><a href="/about">Quiénes somos</a></li>
+						{% if user.is_active %}
+						<li class="dropdown"><a href="#">Hola {{ user.first_name }}!</a>
+							<ul class="dropdown-menu">
+								<li><a href="/account">Mi cuenta</a></li>
+								<li><a href="/logout">Cerrar Sesión</a></li>
+							</ul>
+						</li>
+                        {% else %}
+                        <li class="dropdown"><a href="/#">Iniciar Sesión</a>
+							<ul class="dropdown-menu">
+								<li><a href="/register">Registrarse</a></li>
+								<li><a href="/login">Login</a></li>
+							</ul>
+						</li>
+                        {% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- PAGE CONTENT
+		================================================== -->
+		<div class="singledownloadphp">
+		
+			<!-- TITLE BEGINS -->
+			<div class="headerimage" style="background-image: url(http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2015/03/header.jpg);">
+				<div class="headercontent">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="fleft">
+									<h1 id="service_name" name="service_name">{{ service.title }}</h1>
+								</div>
+								<div class="fright breadc">
+									<a href="/"> Home </a> / <a href="/categories/">Servicios</a> / <a href="/servicelist/{{ service.service_type }}">{% if service.service_type == "JA" %} Jardinería {% endif %}
+									{% if service.service_type == "LO" %} Limpieza del Hogar {% endif %} {% if service.service_type == "MA" %} Mascotas {% endif %}
+									{% if service.service_type == "SN" %} Service de Niñera {% endif %} {% if service.service_type == "OT" %} Otros Servicios {% endif %}
+									{% if service.service_type == "CO" %} Comida {% endif %}</a>/ {{ service.title }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- TITLE ENDS -->
+			
+			<div class="container padtop50 padbot50">
+				<div class="row">
+				
+					<!-- MAIN CONTENT BEGINS -->
+					<div class="col-md-12">
+						<div id="primary" class="content-area">
+							<main id="main" class="site-main" role="main">
+							<article class="contentdownloadphp">
+							<div class="row">
+								<div class="col-md-9">
+									<div class="col-md-6">
+										{% if service.service_image %}
+											<img id="service_image" name="service_image" width="555" height="370" src="{{ MEDIA_URL }}{{ service.get_image }}" class="attachment-post-thumbnail wp-post-image" alt="{{ service.title }}"/>
+                                            {% else %}
+                                            <img id="service_image" name="service_image" width="555" height="370" src="{{ MEDIA_URL }}//offered_service//default.jpg" class="attachment-post-thumbnail wp-post-image" alt="No image"/>
+                                            {% endif %}
+									</div>
+										<br/>
+										<b>Resumen: </b>
+										<p>
+											 {{ service.brief_description }}
+										</p>
+										<br/>
+										<b>Más detalles del servicio: </b>
+										<p>
+											 {{ service.description}}
+										</p>
+								</div>
+								<div class="col-md-3">
+									<div id="secondary" class="widget-area" role="complementary">
+										<aside id="text-4" class="widget widget_text">
+											<h1 class="widget-title section-title sortitemsarea"><span>Ordenar por</span></h1>
+											<ul id="city" name="city" class="edd-taxonomy-widget">
+												<li>
+													<span class="entrylocation"><b>Ubicación: </b> {{ service.city }}, {{ service.state }}<br/></span>
+												</li>
+												<li>
+													<label for="service_price"><b>Precio:</b>
+														<span id="service_price">${{ service.price}} x {{ service.price_delimiter}}</span>
+													</label>
+												</li>
+												<li>
+													<label for="service_type"><b>Tipo de servicio:</b>
+														<span id="service_type">{% if service.service_type == "JA" %} Jardinería {% endif %}
+									{% if service.service_type == "LO" %} Limpieza del Hogar {% endif %} {% if service.service_type == "MA" %} Mascotas {% endif %}
+									{% if service.service_type == "SN" %} Service de Niñera {% endif %} {% if service.service_type == "OT" %} Otros Servicios {% endif %}
+									{% if service.service_type == "CO" %} Comida {% endif %}</span>
+													</label>
+												</li>
+												<li>
+													<label for="service_company_type"><b>Compañía:</b>
+														<span id="service_company_type">Freelance</span>
+													</label>
+												</li>
+												<li>
+													<span class="entrybasicaddto">
+														<a id="buy_button" name="buy_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Add to cart</span></a>
+													</span>
+												</li>
+											</ul>
+										</aside>
+									</div>	
+									
+								</div>
+							</div>
+							</article>
+							</main>
+						</div>
+					</div>
+					<!-- MAIN CONTENT ENDS -->
+
+				</div>
+			</div>
+		</div>		
+				<!-- CALL TO ACTION
+		================================================== -->
+		<div class="actionbeforefooter text-center">
+			<div class="container">
+				
+			</div>
+		</div>
+		<!-- FOOTER
+		================================================== -->
+		<footer class="themefooter section medium-padding bg-graphite">
+		<div class="container">
+			<div class="section-inner row">
+				
+				<div class="column column-1 col-md-4 rightbd">
+					<div class="widgets">
+						<div class="widget widget_text">
+							<div class="widget-content">
+								<h3 class="widget-title">Preguntas Frecuentes</h3>
+								<div class="textwidget">
+									<ul class="edd-taxonomy-widget">
+										<li>
+											<a href="/about/"> ¿Qué tengo que hacer para ofrecer un servicio?</a>
+										</li>
+										<li>
+											<a href="/about/"> ¿Cuál es el medio de pago?</a>
+										</li>
+										<li>
+											<a href="/about/"> ¿Qué tan protegida está mi información?</a>
+										</li>
+										<li>
+											<a href="/about/"><b>Ir a Preguntas Frecuentes</b></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="clear">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- footer a-->
+				<div class="column column-1 col-md-4 rightbd">
+					<div class="widgets">
+						<div class="widget widget_edd_categories_tags_widget">
+							<div class="widget-content">
+								<h3 class="widget-title">Categorías de Servicios</h3>
+								<ul class="edd-taxonomy-widget">
+									<li><a id="jardineria" href="/servicelist/JA">Jardinería</a></li>
+									<li><a id="limpieza" href="/servicelist/LO">Limpieza del Hogar</a></li>
+									<li><a id="ninera" href="/servicelist/SN">Niñera</a></li>
+									<li><a id="mascotas" href="/servicelist/MA">Cuidado de mascotas</a></li>
+									<li><a id="comida" href="/servicelist/CO">Comida</a></li>
+									<li><a id="otros" href="/servicelist/OT">Otros servicios</a></li>
+								</ul>
+							</div>
+							<div class="clear">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- footer b-->
+				<div class="column column-1 col-md-4 rightbd">
+					<div class="widgets">
+						<div class="widget widget_text">
+							<div class="widget-content">
+								<h3 class="widget-title">ACERCA DE HOUSE GURÚ</h3>
+								<div class="textwidget">
+									<p>En House Gurú podrás encontrar una variedad de servicios para tu hogar de manera fácil y rápida.
+									</p>
+									<p>Comprar es tan sencillo como dar un click. ¿Para qué pasar horas haciendo llamadas para contratar un servicio? ¡Ahora con House Gurú solo te tomará un par de minutos!</p>
+								</div>
+							</div>
+							<div class="clear">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /footer-c -->
+				<div class="clear">
+				</div>
+			</div>
+			<!-- /footer-inner -->
+		</div>
+		<!-- /grid -->
+		<div class="sectioncredits">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<span class="credits-left fleft">
+						2015 &copy; All Rights Reserved, WowThemes.net </span>
+						<ul class="footermenu fright">
+							<li><a href="/">Inicio</a></li>
+							<li><a href="/categories/">Sercivios</a></li>
+							<li><a href="/offerservice/">Ofecer Servicios</a></li>
+						</ul>
+					</div>
+					<div class="clear">
+					</div>
+				</div>
+			</div>
+			<!-- /grid -->
+		</div>
+		<!-- /sectioncredits -->
+		</footer>
+
+		<!-- /footer -->
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+        <script type='text/javascript'>
+			jQuery(document).ready(function($) {
+				$("#buy_button").click(function(){
+                    $.ajax({
+					    url : "/add_to_cart/", 
+                        type : "POST", 
+                        data : {
+                            'service_id' : '{{ service.id }}',
+                            'csrfmiddlewaretoken' : '{{csrf_token}}'
+                        },
+                        success : function(rc) {
+                            alert("added");
+                        },
+                        error : function(error) {
+                            alert(error);
+                        }
+                    });
+				});
+			});
+        </script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>2w
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/SmoothScroll.js'></script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/init.js'></script>
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/anim.js'></script>
+	</div>
+</body>
+</html>

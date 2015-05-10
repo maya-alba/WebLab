@@ -10,13 +10,13 @@
 	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/bootstrap.min.css' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ MEDIA_URL }}css/style.css' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/font-awesome.css' type='text/css' media='all'/>
-	
+
 	<!-- UNCOMMENT THE FOLLOWING LINE TO ACTIVATE THE BOXED LAYOUT (see the documentation for more)-->
-	
+
 	<!--
 	<link href="assets/css/boxed.css" rel="stylesheet">
-	-->	
-	
+	-->
+
 	<!-- CHANGE THEME SKIN COLOR HERE (replace blue with any other color from assets/css/skins/ folder) -->
 	<link href="{{ MEDIA_URL }}assets/css/skins/bluedark.css" rel="stylesheet">
 
@@ -47,11 +47,11 @@
 						<li><a href="/categories">Servicios</a></li>
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
-						<li class="active"><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						<li class="active"><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
-								<li><a href="/logout">Cerrar Sesión</a></li>								
+								<li><a href="/logout">Cerrar Sesión</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -61,7 +61,7 @@
 		<!-- PAGE CONTENT
 		================================================== -->
 		<div class="templatemyaccount">
-		
+
 			<!-- TITLE BEGINS -->
 			<div class="headerimage" style="background-image: url(http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2015/03/header.jpg);">
 				<div class="headercontent">
@@ -80,7 +80,7 @@
 				</div>
 			</div>
 			<!-- TITLE ENDS -->
-			
+
 			<div class="container padtop50 padbot10">
 				<div class="row">
 				<!-- MAIN CONTENT BEGINS -->
@@ -95,172 +95,84 @@
 										Nombre
 									</th>
 									<th class="edd_cart_item_price">
-										Precio
+										Cantidad
 									</th>
 									<th class="edd_cart_item_price">
-										Cantidad
+										Precio
 									</th>
 								</tr>
 								</thead>
 								<tbody>
-								
+
 								<!-- cart item 1 -->
-								<tr class="edd_cart_item">
+                                {% for service in services %}
+								<tr class="edd_cart_item" id="row_service_{{ service.0.serviceID }}">
 									<td class="edd_cart_item_name">
 										<div class="row">
 											<div class="col-md-1">
-												<a class="edd_cart_remove_item_btn" href="#"><i class="fa fa-trash-o"></i></a>
+												<a onclick="remove_item({{ service.0.serviceID }})" class="edd_cart_remove_item_btn" href="#"><i class="fa fa-trash-o"></i></a>
 											</div>
 											<div class="col-md-11">
 												<div class="edd_cart_item_image">
-													<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
+													<img width="25" height="25" src="
+                                                    {% if service.0.service_image %}
+                                                        {{ MEDIA_URL }}{{ service.0.get_image }}
+                                                    {% else %}
+                                                        {{ MEDIA_URL }}offered_service/default.jpg
+                                                    {% endif %}
+                                                    "
+                                                   class="attachment-25x25 wp-post-image" alt="{{ service.0.title }}"/>
 												</div>
-												<span class="edd_checkout_cart_item_title">Paseo de mascota</span>
+                                                <input type="hidden" class="item_hidden_id" value="{{ service.0.serviceID }}"/>
+												<span class="edd_checkout_cart_item_title">{{ service.0.title }}</span>
 											</div>
 										</div>
 									</td>
 									<td class="edd-item-quantity">
 										<div class="btn-group">
-				  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">0 <span class="caret"></span></button>
+				  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="quantity_of_service" id="quantity_{{ service.0.serviceID }}">{{ service.1 }}</span> <span class="caret"></span></button>
 				  							<ul class="dropdown-menu" role="menu">
-												<li><a value="1">2</a></li>
-												<li><a value="2">3</a></li>
-												<li><a value="3">4</a></li>
-												<li><a value="4">5</a></li>
-												<li><a value="5">6</a></li>
+                                                {% for q in limit_quantity %}
+												<li><a onclick="set_quantity({{ service.0.serviceID }}, {{ q }}, {{ service.0.price }})" value="{{ q }}">{{ q }}</a></li>
+                                                {% endfor %}
 				  							</ul>
 										</div>
 									</td>
-									<td class="edd_cart_item_price">
-										$600.00
+									<td id="item_price_{{ service.0.serviceID }}" class="edd_cart_item_price item_price_total">
+										$ {{ service.2 }}
 									</td>
 								</tr>
-								
-								<!-- cart item 2 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="row">
-											<div class="col-md-1">
-												<a class="edd_cart_remove_item_btn" href="#"><i class="fa fa-trash-o"></i></a>
-											</div>
-											<div class="col-md-11">
-												<div class="edd_cart_item_image">
-													<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/163_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="163_1"/>
-												</div>
-												<span class="edd_checkout_cart_item_title">Jardinería Bonsai</span>
-											</div>
-										</div>
-									</td>
-									<td class="edd-item-quantity">
-										<div class="btn-group">
-				  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">0 <span class="caret"></span></button>
-				  							<ul class="dropdown-menu" role="menu">
-												<li><a value="1">2</a></li>
-												<li><a value="2">3</a></li>
-												<li><a value="3">4</a></li>
-												<li><a value="4">5</a></li>
-												<li><a value="5">6</a></li>
-				  							</ul>
-										</div>
-									</td>
-									<td class="edd_cart_item_price">
-										$150.00
-									</td>
-								</tr>
-								
-								<!-- cart item 3 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="row">
-											<div class="col-md-1">
-												<a class="edd_cart_remove_item_btn" href="#"><i class="fa fa-trash-o"></i></a>
-											</div>
-											<div class="col-md-11">
-												<div class="edd_cart_item_image">
-													<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/168_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="163_1"/>
-												</div>
-												<span class="edd_checkout_cart_item_title">Niñera La Nana Fine</span>
-											</div>
-										</div>
-									</td>
-									<td class="edd-item-quantity">
-										<div class="btn-group">
-				  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">0 <span class="caret"></span></button>
-				  							<ul class="dropdown-menu" role="menu">
-												<li><a value="1">2</a></li>
-												<li><a value="2">3</a></li>
-												<li><a value="3">4</a></li>
-												<li><a value="4">5</a></li>
-												<li><a value="5">6</a></li>
-				  							</ul>
-										</div>
-									</td>
-									<td class="edd_cart_item_price">
-										$5,000.00
-									</td>
-								</tr>
-								
-								<!-- cart item 4 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="row">
-											<div class="col-md-1">
-												<a class="edd_cart_remove_item_btn" href="#"><i class="fa fa-trash-o"></i></a>
-											</div>
-											<div class="col-md-11">
-												<div class="edd_cart_item_image">
-													<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/5_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="163_1"/>
-												</div>
-												<span class="edd_checkout_cart_item_title">Comida a domicilio</span>
-											</div>
-										</div>
-									</td>
-									<td class="edd-item-quantity">
-										<div class="btn-group">
-				  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">0 <span class="caret"></span></button>
-				  							<ul class="dropdown-menu" role="menu">
-												<li><a value="1">2</a></li>
-												<li><a value="2">3</a></li>
-												<li><a value="3">4</a></li>
-												<li><a value="4">5</a></li>
-												<li><a value="5">6</a></li>
-				  							</ul>
-										</div>
-									</td>
-									<td class="edd_cart_item_price">
-										$200.00
-									</td>
-								</tr>				
+                                {% endfor %}
 								</tbody>
-								
+
 								</table>
 							</div>
 						</form>
 						<div id="edd_checkout_form_wrap" class="edd_clearfix">
-							<form id="edd_purchase_form" class="edd_form" action="#" method="POST">
+							<form id="edd_purchase_form" class="edd_form" action="#" method="POST">{% csrf_token %}
 								<fieldset id="edd_purchase_submit">
 									<p id="edd_final_total_wrap" align="right">
 										<strong>Purchase Total:</strong>
-										<span class="edd_cart_amount" data-subtotal="50.5" data-total="50.5">$50.50</span>
+										<span id="id_total" class="edd_cart_amount" data-subtotal="{{ total }}" data-total="{{ total }}">$ {{ total }}</span>
 									</p>
 									<input type="submit" class="edd-submit button fright" id="edd-purchase-button" name="edd-purchase" value="Comprar"/>
 								</fieldset>
 							</form>
 						</div>
 					</div>
-				</div>				
+				</div>
 				<!-- MAIN CONTENT ENDS -->
-					
-				</div>				
+
+				</div>
 			</div>
-		</div>		
-		
+		</div>
+
 		<!-- FOOTER
 		================================================== -->
 		<footer class="themefooter section medium-padding bg-graphite">
 		<div class="container">
 			<div class="section-inner row">
-				
+
 				<div class="column column-1 col-md-4 rightbd">
 					<div class="widgets">
 						<div class="widget widget_text">
@@ -354,8 +266,72 @@
 		</footer>
 
 		<!-- /footer -->
-		
+
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+        <script type='text/javascript'>
+			function set_quantity(id, q, price) {
+                jQuery("#quantity_"+id).html(q);
+                sub_total = q*price;
+                jQuery("#item_price_"+id).html("$ " + sub_total.toFixed(2));
+                total = 0.0
+                jQuery(".item_price_total").each(function(index){
+                    total += parseFloat(jQuery(this).text().split("$ ")[1]);
+                });
+                jQuery("#id_total").html("$ " + total.toFixed(2));
+            }
+            function remove_item(id) {
+                if (confirm("¿Está seguro que desea borrar el elemento del carrito?")) {
+                    jQuery("#row_service_"+id).remove();
+                    total = 0.0
+                    jQuery(".item_price_total").each(function(index){
+                        total += parseFloat(jQuery(this).text().split("$ ")[1]);
+                    });
+                    jQuery("#id_total").html("$ " + total.toFixed(2));
+                    jQuery.ajax({
+					    url : "/remove_from_cart/",
+                        type : "POST",
+                        data : {
+                            'service_id' : id,
+                            'csrfmiddlewaretoken' : '{{ csrf_token }}'
+                        },
+                        success : function(rc) {
+                            //alert("removed");
+                        },
+                        error : function(error) {
+                            alert(error);
+                        }
+                    });
+                }
+            }
+            jQuery(document).ready(function($) {
+                $( "#edd_purchase_form" ).submit(function(event) {
+                    var quantities=[]
+                    $(".quantity_of_service").each(function(index){
+                        quantities[quantities.length] = $(this).text();
+                    });
+                    var services=[]
+                    $(".item_hidden_id").each(function(index){
+                        services[services.length] = $(this).val();
+                    });
+                    event.preventDefault();
+                    jQuery.ajax({
+					    url : "/buy/",
+                        type : "POST",
+                        data : {
+                            'quantities' : quantities,
+                            'services' : services,
+                            'csrfmiddlewaretoken' : '{{ csrf_token }}'
+                        },
+                        success : function(rc) {
+                            alert("Servicios comprados");
+                        },
+                        error : function(error) {
+                            alert(error);
+                        }
+                    });
+                });
+			});
+        </script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>2w
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>

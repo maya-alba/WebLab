@@ -45,11 +45,11 @@ class AppUser(models.Model):
     user = models.ForeignKey(User)
     profileImage = models.ImageField(upload_to = settings.MEDIA_ROOT + "images")
 class OfferedService(models.Model):
-    seviceID = models.AutoField(primary_key = True)
+    serviceID = models.AutoField(primary_key = True)
     user_email = models.ForeignKey(User)
     title = models.CharField(max_length = 45)
     service_type = models.CharField(choices = SERVICE_TYPES, max_length = 45)
-    account = models.BigIntegerField(max_length=16)
+    account = models.BigIntegerField()
     company = models.BooleanField()
     company_name = models.CharField(null=True, blank=True, max_length = 45, help_text="Use in case that company filled")
     price = models.DecimalField(max_digits=7, decimal_places=2)
@@ -58,16 +58,19 @@ class OfferedService(models.Model):
     city = models.CharField(choices=CITY, max_length = 45)
     service_image = models.ImageField(upload_to = settings.MEDIA_ROOT + "offered_service", blank=True)
     brief_description = models.CharField(max_length = 140)
-    descripton = models.TextField()
+    description = models.TextField()
     service_email = models.EmailField(max_length = 70)
     telephone = models.CharField(max_length = 15)
-    rating = models.IntegerField(blank = True, null = True)
+    rating = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.user_email.first_name + u" - " + self.title
 
     def get_image(self):
         return self.service_image.path.split("media")[1].replace("\\", "/")
+
+    def get_company(self):
+        return "Freelance" if not self.company else self.company_name
 
 class PurchasedService(models.Model):
     purchased_service_id = models.AutoField(primary_key = True)
@@ -77,4 +80,4 @@ class PurchasedService(models.Model):
     quantity = models.IntegerField()
     total = models.DecimalField(max_digits=7, decimal_places=2)
     status = models.IntegerField(choices = VALID_STATES_OPTIONS, default=ORDER)
-    rating = models.IntegerField(blank = True, null = True)
+    rating = models.IntegerField(default=0)

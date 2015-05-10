@@ -48,6 +48,7 @@
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li class="active"><a href="/about">Quiénes somos</a></li>
 						{% if user.is_active %}
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -70,7 +71,7 @@
 		<!-- PAGE CONTENT
 		================================================== -->
 		
-		<div class="singledownloadphp">
+		<div class="templatemyaccount">
 
 			<!-- TITLE BEGINS -->
 			<div class="headerimage" style="background-image: url(http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2015/03/header.jpg);">
@@ -101,15 +102,31 @@
 							<article class="contentdownloadphp">
 							<div class="row">
 								<div class="col-md-7">
-									<div class="col-md-6">
-										<img width="277" height="185" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/5_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="5_1"/>
+									<div class="row">
+										<div class="col-md-12">
+										<span class="smalltitle"><font color="#3a97b1" size="6"><b>A cerca de House Gurú</b></font></span>
+										</div>
 									</div>
 										<p>¿Has tenido una fuga alguna vez y no sabes en dónde contratar a un fontanero? ¿O tienes una salida programada pero no sabes cuál niñera es confiable y que se adapte a tu presupuesto?</p>
 											<p>¡Ahora con House Gurú podrás dejar de preocuparte por esto! En House Gurú podrás encontrar una variedad de servicios para tu hogar de manera fácil y rápida.
 											</p>
 											<p>Comprar es tan sencillo como dar un click. ¿Para qué pasar horas haciendo llamadas para contratar un servicio? ¡Ahora con House Gurú solo te tomará un par de minutos!</p>
 											<p>Puedes buscar los servicios que más se acomoden a tus necesidades, ya sea por precio, ubicación o rating. Además podrás ofrecer servicios para que otros usuarios puedan contratarlos.</p>
-											<p>Así que si no eres ya un Gurú, ¿qué esperas? <a href="/register/">¡Conviértete en Gurú!</a></p>
+											<p>Así que si no eres ya un Gurú, ¿qué esperas? <a href="/register/"><b>¡Conviértete en Gurú!</b></a></p>
+											<div align="center">
+												<br/>
+											<img alt="House Gurú" src="{{ MEDIA_URL }}assets/img/logo.png"/>
+											<br/>
+											<br/>
+
+										</div>
+									<div class="row">
+										<div class="col-md-12">
+										<span class="smalltitle">Aclaraciones Importantes</span>
+										</div>
+									</div>
+									<p>House Gurú es un proyecto escolar, por lo que las compras y ventas de servicios sólo son una simulación. House Gurú no se hace responsable de cualquier contenido que usuarios puedan subir.</p>
+									
 								</div>
 								<div class="col-md-5">
 									<div id="secondary" class="widget-area" role="complementary">
@@ -117,28 +134,24 @@
 											<h1 class="widget-title section-title sortitemsarea"><span>Preguntas Frecuentes</span></h1>
 											<ul id="city" name="city" class="edd-taxonomy-widget">
 												<li>
-													<p><b>¿QUé tengo que hacer para ofrecer un servicio?</b></p>
-													<p>jsaijoais joh</p>
+													<p><b>¿Qué tengo que hacer para ofrecer un servicio?</b></p>
+													<p>Para ofrecer un serivio tienes que tener una cuenta en House Gurú. Una vez que estés loggeado, diríjete a la pestaña de 'Ofrecer Servicio' y ahí podrás llenar los campos necesarios para crear un servicio.</p>
 												</li>
 												<li>
-													<label for="service_price"><b>Precio:</b>
-														<span id="service_price">$180 x hora</span>
-													</label>
+													<p><b>¿Cuál es el medio de pago?</b></p>
+													<p>Para pagar un servicio podrás utilizar PayPal.</p>
 												</li>
 												<li>
-													<label for="service_location"><b>Ubicación:</b>
-														<span id="service_location">Guadalajara, Jalisco</span>
-													</label>
+													<p><b>¿Tengo un límite de servicios que puedo ofrecer?</b></p>
+													<p>¡Claro que no! Entre más servicios ofrezcas más posibilidades tienes de que tu negocio crezca.</p>
 												</li>
 												<li>
-													<label for="service_type"><b>Tipo de servicio:</b>
-														<span id="service_type">Jardinería</span>
-													</label>
+													<p><b>¿Puedo ofrecer un servicio aunque no tenga una empresa?</b></p>
+													<p>Ya seas una empresa o no, podrás ofrecer servicios en House Gurú. Al momento de crear un servicio se te preguntará si eres una empresa o si eres freelancer.</p>
 												</li>
 												<li>
-													<label for="service_company_type"><b>Compañía:</b>
-														<span id="service_company_type">Freelance</span>
-													</label>
+													<p><b>¿Cómo puedo ver en qué estatus está un servicio que pedí?</b></p>
+													<p>En la sección de 'Mi Cuenta' haz click en la opción 'Mis Compras' y ahí podrás ver el estatus.</p>
 												</li>
 											</ul>
 										</aside>

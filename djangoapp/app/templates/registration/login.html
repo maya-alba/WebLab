@@ -89,7 +89,7 @@
 				<div class="col-md-6">
 					<span class="smalltitle">¡Hola Gurú, inicia sesión!</span>
 					<form id="login_form" class="edd_form" action="{% url 'django.contrib.auth.views.login' %}" method="post">{% csrf_token %}
-						<fieldset>
+						<fieldset class="gray_back">
 							<p>
 								<label for="user_email"><b>E-mail</b></label>
 								<input id="user_email" class="required edd-input form-control" type="email" name="username" title="Email" placeholder="E-mail"/>
@@ -101,7 +101,7 @@
 							<br/>
 							<article class="contentdownloadphp" align="center">
 									<span class="entrybasicaddto">
-									<a id="login_button" name="login_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Iniciar Sesión</span></a>
+									<a id="login_button" name="login_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white"><i class="fa fa-home"></i> Iniciar Sesión</span></a>
 								</span>
 							</article>
 						</fieldset>

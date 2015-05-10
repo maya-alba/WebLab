@@ -47,7 +47,7 @@
 						<li><a href="/categories">Servicios</a></li>
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
-						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown active"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -84,11 +84,13 @@
 			
 			<div class="container padtop40 padbot50">
 			<div class="row">
+				<div class="col-md-3">
+				</div>
 				<div class="col-md-6">
 					<span class="smalltitle">Edita tu Perfil</span>
 					{% if return_message %}<p class="message">{{ return_message }}</p>{% endif %}
 					<form id="profile_editor_form" class="edd_form" action="#" method="post">{% csrf_token %}
-						<fieldset> 
+						<fieldset class="gray_back"> 
 							<p id="edd_profile_name_wrap">
 								<label for="user_name"><b>Nombre</b></label>
 								<input name="user_name" id="user_name" class="text edd-input form-control" type="text" value="{{ user.first_name }}"/>
@@ -107,7 +109,7 @@
 								<label for="user_password2"><b>Confirmar contraseña</b></label>
 								<input name="user_password2" id="user_password2" class="password edd-input form-control" type="password"/>
 							</p>
-							<article class="contentdownloadphp">
+							<article class="contentdownloadphp" align="center">
 								<p id="edd_profile_submit_wrap">
 									<span class="entrybasicaddto">
 									<a id="profile_editor_submit" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Guardar Cambios</span></a>
@@ -117,22 +119,8 @@
 					</form>
 					<!-- #edd_profile_editor_form -->
 				</div>
-					<div class="col-md-6">
-						<span class="smalltitle">Cambia tu foto</span>
-						<fieldset> 
-							<div class="imagearea">
-									<img width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/163_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="163_1"/>
-									<br/>
-									<br/>
-							</div>
-							<article class="contentdownloadphp">
-								<p id="edd_profile_submit_wrap">
-									<span class="entrybasicaddto">
-									<a id="image_button" name="image_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Cambiar Imagen</span></a>
-								</span>
-							</article>
-						</fieldset> 
-					</div>
+				<div class="col-md-3">
+				</div>
 				</div>			
 			</div>
 		</div>		

@@ -92,7 +92,7 @@
                     {% else %}
 					<span class="smalltitle">Crear Cuenta Nueva</span>
 					<form id="register_form" class="edd_form" action="#" method="post">{% csrf_token %}
-						<fieldset>
+						<fieldset class="gray_back">
                             {% if register_form.errors %}
                             <p class="errors">
                                 Por favor corrija los siguientes errores:
@@ -115,7 +115,7 @@
 							<br/>
 							<article class="contentdownloadphp" align="center">
 									<span class="entrybasicaddto">
-									<a id="register_submit" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Registrar</span></a>
+									<a id="register_submit" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white"> <i class="fa fa-user"></i>   Registrar</span></a>
 								</span>
 							</article>
 						</fieldset>

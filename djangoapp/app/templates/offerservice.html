@@ -47,7 +47,7 @@
 						<li><a href="/categories">Servicios</a></li>
 						<li class="active"><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
-						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -93,8 +93,8 @@
                         {{ message_return | safe }}
                         {% else %}
 							<span class="smalltitle">Ofrecer un nuevo servicio</span>
-							<form id="add_service_form" class="edd_form" action="#" method="post">{% csrf_token %}
-								<fieldset>
+							<form enctype="multipart/form-data" id="add_service_form" class="edd_form" action="#" method="post">{% csrf_token %}
+								<fieldset class="gray_back">
                                     {% if add_service_form.errors %}
                                     <p class="errors">
                                         <font color="red"><b>Por favor corrija los siguientes errores:</b></font>
@@ -105,7 +105,12 @@
                                         {% for field in add_service_form %}
                                         <p>
                                             <font color="red">{{ field.errors }}</font>
-                                            <label><b>{{ field.label }}</b></label>
+                                            {% if field == add_service_form.service_company_name %}
+                                            	<label id="company_name"><b>{{ field.label }}</b></label>
+                                            {% else %}
+                                            	<label><b>{{ field.label }}</b></label>
+                                            {% endif %}
+
                                             {% if field == add_service_form.service_is_company %}
                                                 {% for radio in field %}
                                                     </br>{{ radio }}
@@ -128,7 +133,7 @@
 
 									<article class="contentdownloadphp" align="center">
 										<span class="entrybasicaddto">
-										<a id="service_create_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Crear Servicio</span></a>
+										<a id="service_create_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white"> <i class="fa fa-upload"></i>  Crear Servicio</span></a>
 									</span>
 									</article>
 
@@ -267,10 +272,19 @@
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
         <script type="text/javascript">
 			jQuery(document).ready(function($) {
+				$("#id_service_is_company_1").click(function(){
+					$("#id_service_company_name").hide();
+					$("#company_name").hide();
+				});
+				$("#id_service_is_company_0").click(function(){
+					$("#id_service_company_name").show();
+					$("#company_name").show();
+				});
 				$("#service_create_button").click(function(){
 					$("#add_service_form").submit();
 				});
 			});
+
 		</script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>

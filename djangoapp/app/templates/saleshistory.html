@@ -46,7 +46,7 @@
 						<li><a href="/categories">Servicios</a></li>
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
-						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown active"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -109,93 +109,45 @@
 								</thead>
 								<tbody>
 								
-								<!-- cart item 1 -->
+								<!-- cart item  -->
+								{% for service in services %}
 								<tr class="edd_cart_item">
 									<td class="edd_cart_item_name">
 										<div class="edd_cart_item_image">
-											<img id="service_image" name="service_image" width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
+											<img width="25" height="25" src="
+                                                    {% if service.seller_email.service_image %}
+                                                        {{ MEDIA_URL }}{{ service.seller_email.get_image }}
+                                                    {% else %}
+                                                        {{ MEDIA_URL }}offered_service/default.jpg
+                                                    {% endif %}
+                                                    "
+                                                   class="attachment-25x25 wp-post-image" alt="{{ service.seller_email.service_image }}"/>
 										</div>
-										<span id="service_" name="service_" class="edd_checkout_cart_item_title">Paseo de mascota</span>
+										<span id="service_" name="service_" class="edd_checkout_cart_item_title">{{ service.seller_email.title}}</span>
 									</td>
 									<td id="service_date" name="service_date" class="edd_cart_item_price">
-										5/Febrero/2015
+										{{ service.date}}
 									</td>
 									<td id="service_client" name="service_client" class="edd_cart_item_price">
-										Jimena Alba
+										{{ service.client_email.first_name}} {{ service.client_email.last_name}}
 									</td>
 									<td id="service_status" name="service_status" class="edd-item-quantity">
-										Enviado					
-									</td>
+										{% if service.status == 0%}
+											<button onclick="refresh({{ service.purchased_service_id}})" type="button" class="btn btn-info dropdown-toggle" ><span class="quantity_of_service">Ya lo envié</span></button>
+										{% else %}
+											{% for st in status%}{% if service.status == st.0 %}{{ st.1 }}{% endif %}{% endfor%}
+										{% endif %}
+									</td>				
 									<td id="service_rating" name="service_rating" class="edd_cart_item_price">
-										N/A
+										{% if service.rating %}
+												{{ service.rating }}
+											{% else %}
+												SC
+											{% endif %}
 									</td>
 								</tr>
+								{% endfor %}
 								
-								<!-- cart item 2 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="edd_cart_item_image">
-											<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
-										</div>
-										<span class="edd_checkout_cart_item_title">Servicio de Niñera Lulu</span>
-									</td>
-									<td class="edd_cart_item_price">
-										26/Mayo/2014
-									</td>
-									<td class="edd_cart_item_price">
-										Lupita Jones
-									</td>
-									<td class="edd-item-quantity">
-										Esperando calificación
-									</td>
-									<td class="edd_cart_item_price">
-										N/A
-									</td>
-								</tr>
-								
-								<!-- cart item 3 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="edd_cart_item_image">
-											<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
-										</div>
-										<span class="edd_checkout_cart_item_title">Paseo de mascota</span>
-									</td>
-									<td class="edd_cart_item_price">
-										20/Mayo/2014
-									</td>
-									<td class="edd_cart_item_price">
-										Jimena Alba
-									</td>
-									<td class="edd-item-quantity">
-										Cerrado				  							  							
-									</td>
-									<td class="edd_cart_item_price">
-										5
-									</td>
-								</tr>
-								
-								<!-- cart item 4 -->
-								<tr class="edd_cart_item">
-									<td class="edd_cart_item_name">
-										<div class="edd_cart_item_image">
-											<img width="25" height="25" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1-150x150.jpg" class="attachment-25x25 wp-post-image" alt="172_1"/>
-										</div>
-										<span class="edd_checkout_cart_item_title">Paseo de mascota</span>
-									</td>
-									<td class="edd_cart_item_price">
-										25/Enero/2014
-									</td>
-									<td class="edd_cart_item_price">
-										Arantxa Viladomat
-									</td>
-									<td class="edd-item-quantity">
-				  						Cancelado
-									</td>
-									<td class="edd_cart_item_price">
-										2
-									</td>
-								</tr>				
 								</tbody>
 								
 								</table>
@@ -313,8 +265,29 @@
 		<!-- /footer -->
 		
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+		<script type='text/javascript'>
+            function refresh(id) {
+                if (confirm("¿Está seguro que ya se envió el servicio?")) {
+                    jQuery.ajax({
+					    url : "/refresh_sale/",
+                        type : "POST",
+                        data : {
+                            'purchased_id' : id,
+                            'csrfmiddlewaretoken' : '{{ csrf_token }}'
+                        },
+                        success : function(rc) {
+                            //alert(rc);
+                            window.location.reload(true);
+                        },
+                        error : function(error) {
+                            alert(id);
+                        }
+                    });
+                }
+            }
+        </script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
-		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>2w
+		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/SmoothScroll.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/init.js'></script>

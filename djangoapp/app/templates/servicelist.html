@@ -4,10 +4,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link rel="shortcut icon" href="{{ MEDIA_URL }}assets/img/favicon.png"/>
-	<title>{% if service_type == "JA" %} Jardinería {% endif %}
-									{% if service_type == "LO" %} Limpieza del Hogar {% endif %} {% if service_type == "MA" %} Mascotas {% endif %}
-									{% if service_type == "SN" %} Service de Niñera {% endif %} {% if service_type == "OT" %} Otros Servicios {% endif %}
-									{% if service_type == "CO" %} Comida {% endif %}
+	<title>
+		{% for st in service_types %}{% if service_type == st.0 %} {{ st.1 }} {% endif %}{% endfor %}
 	</title>
 	<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
 	<link rel='stylesheet' href='{{ MEDIA_URL }}edd_templates/edd.css' type='text/css' media='all'/>
@@ -52,6 +50,7 @@
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
 						{% if user.is_active %}
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -82,16 +81,17 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="fleft">
-									<h1>{% if service_type == "JA" %} Jardinería {% endif %}
-									{% if service_type == "LO" %} Limpieza del Hogar {% endif %} {% if service_type == "MA" %} Mascotas {% endif %}
-									{% if service_type == "SN" %} Service de Niñera {% endif %} {% if service_type == "OT" %} Otros Servicios {% endif %}
-									{% if service_type == "CO" %} Comida {% endif %}</h1>
+									<h1>
+                                    {% for st in service_types %}
+                                    {% if service_type == st.0 %} {{ st.1 }} {% endif %}
+                                    {% endfor %}
+                                    </h1>
 								</div>
 								<div class="fright breadc">
-									<a href="/"> Inicio </a> / <a href="/categories/">Servicios</a> / {% if service_type == "JA" %} Jardinería {% endif %}
-									{% if service_type == "LO" %} Limpieza del Hogar {% endif %} {% if service_type == "MA" %} Mascotas {% endif %}
-									{% if service_type == "SN" %} Service de Niñera {% endif %} {% if service_type == "OT" %} Otros Servicios {% endif %}
-									{% if service_type == "CO" %} Comida {% endif %}
+									<a href="/"> Inicio </a> / <a href="/categories/">Servicios</a> /
+                                    {% for st in service_types %}
+                                    {% if service_type == st.0 %} {{ st.1 }} {% endif %}
+                                    {% endfor %}
 								</div>
 							</div>
 						</div>
@@ -109,7 +109,7 @@
 							<main id="main" class="site-main" role="main">
 							<article class="contentdownloadphp">
 							<div class="row">
-								<div class="col-md-11">
+								<div id="result_filter" class="col-md-11">
                                 {% for service in services %}
 									<div class="row">
 										<div class="col-md-3">
@@ -117,14 +117,17 @@
                                             {% if service.service_image %}
 											<img id="service_image" name="service_image" width="555" height="370" src="{{ MEDIA_URL }}{{ service.get_image }}" class="attachment-post-thumbnail wp-post-image" alt="{{ service.title }}"/>
                                             {% else %}
-                                            <img id="service_image" name="service_image" width="555" height="370" src="{{ MEDIA_URL }}//offered_service//default.jpg" class="attachment-post-thumbnail wp-post-image" alt="No image"/>
+                                            <img id="service_image" name="service_image" width="555" height="370" src="{{ MEDIA_URL }}offered_service/default.jpg" class="attachment-post-thumbnail wp-post-image" alt="No image"/>
                                             {% endif %}
 
 										</div>
 										<div class="col-md-6">
 											<h3 id="service_name" name="service_name"><b>{{ service.title }}</b></h3>
 											<p id="service_price" name="service_price">
-												 $ {{ service.price }} x {{ service.price_delimiter }}
+												 $ {{ service.price }} x
+												 {% for pd in price_delimiter %}
+				                                    {% if service.price_delimiter == pd.0 %} {{ pd.1 }} {% endif %}
+				                                 {% endfor %}
 											</p>
 											<p id="service_brief" name="service_brief">
 												 {{ service.brief_description }}
@@ -134,7 +137,7 @@
 											<br/><br/><br/>
 											<form class="edd_download_purchase_form" method="post">
 												<div class="edd_purchase_submit_wrapper">
-													<a href="/serviceoverview/{{ service.seviceID }}" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Ver</span></a>
+													<a href="/serviceoverview/{{ service.serviceID }}" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white"><i class="fa fa-plus"></i> Ver</span></a>
 												</div>
 											</form>
 										</div>
@@ -164,57 +167,32 @@
 										<select name="order_service" id="order_service" >
 											<option value="0">Ordenar por</option>
 											<option value="rating">Rating</option>
-											<option value="ubicacion">Ubicación</option>
-											<option value="precio">Precio</option>
+
+											<option value="price">Precio</option>
 										</select>
 									   <noscript>
 											<input type="submit" value="Submit">
 									   </noscript>
-									 </form>
+								    </form>
 								</div>
 							</aside>
 
 							<aside id="text-4" class="widget widget_text">
-								<h1 class="widget-title section-title sortitemsarea"><span>Estado</span></h1>
+								<h1 class="widget-title section-title sortitemsarea"><span>Ciudad</span></h1>
+
 								<div class="textwidget">
-									<form id="state_form" method="GET" action="#" class="wowsortitems">
-										<select name="state" id="state" >
-											<option value="0">Seleccionar estado</option>
-											<option value="1">Nuevo León</option>
-											<option value="2">Guadalajara</option>
-											<option value="3">Morelia</option>
-											<option value="4">Zacatecas</option>
-											<option value="5">Michoacán</option>
-											<option value="6">Colima</option>
+									<form id="city_form" method="GET" action="#" class="wowsortitems">
+										<select name="city" id="city" >
+											<option value="0">Seleccionar ciudad</option>
+                                            {% for city in cities %}
+                                                <option value="{{city.0 }}">{{ city.1 }}</option>
+                                            {% endfor%}
 										</select>
 									   <noscript>
 											<input type="submit" value="Submit">
 									   </noscript>
 									 </form>
 								</div>
-							</aside>
-
-
-
-							<aside id="edd_categories_tags_widget-3" class="widget widget_edd_categories_tags_widget">
-							<h1 class="widget-title section-title"><span>Ciudad</span></h1>
-							<ul id="city" name="city" class="edd-taxonomy-widget">
-								<li>
-									<label><input type="checkbox" name="check_city" id="check_zapopan" value="check_zapopan" checked> Zapopan</label>
-								</li>
-								<li>
-									<label><input type="checkbox" name="check_city" id="check_tlaj" value="check_tlaj"> Tlajomulco</label>
-								</li>
-								<li>
-									<label><input type="checkbox" name="check_city" id="check_gdl" value="check_gdl"> Guadalajara</label>
-								</li>
-								<li>
-									<label><input type="checkbox" name="check_city" id="check_tonala" value="check_tonala"> Tonalá</label>
-								</li>
-								<li>
-									<label><input type="checkbox" name="check_city" id="check_chapala" value="check_chapala"> Chapala</label>
-								</li>
-							</ul>
 							</aside>
 
 							<aside class="widget widget_edd_cart_widget">
@@ -252,7 +230,7 @@
 		<footer class="themefooter section medium-padding bg-graphite">
 		<div class="container">
 			<div class="section-inner row">
-				
+
 				<div class="column column-1 col-md-4 rightbd">
 					<div class="widgets">
 						<div class="widget widget_text">
@@ -350,6 +328,38 @@
 		<!-- SCRIPTS
 		================================================== -->
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+        <script type='text/javascript'>
+            jQuery(document).ready(function($) {
+                $( "#search_button" ).click(function(event) {
+                    event.preventDefault();
+                    var order_service = jQuery("#order_service").val();
+                    var city = jQuery("#city").val();
+                    var check_company = jQuery("#check_company").is(":checked");
+                    var check_freelance = jQuery("#check_freelance").is(":checked");
+                    jQuery.ajax({
+					    url : "/filter_search/",
+                        type : "POST",
+                        async : true,
+                        data : {
+                            'order_service' : order_service,
+                            'city' : city,
+                            'check_company' : check_company,
+                            'check_freelance' : check_freelance,
+                            'service_type' : '{{ service_type }}',
+                            'csrfmiddlewaretoken' : '{{ csrf_token }}'
+                        },
+                        success : function(rc) {
+                            if (rc!="") {
+                                jQuery("#result_filter").html(rc);
+                            }
+                        },
+                        error : function(error) {
+                            alert(error);
+                        }
+                    });
+                });
+			});
+        </script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>

@@ -47,7 +47,7 @@
 						<li><a href="/categories">Servicios</a></li>
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
-						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown active"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -93,129 +93,35 @@
 							<article class="contentdownloadphp">
 							<div class="row">
 								<div class="col-md-11">
+									{% for service in services %}
 									<div class="row">
 										<div class="col-md-3">
 											<br/>
-											<img id="service_image" name="service_image" width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2014/07/138_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="138_1"/>
+											<img id="service_image" name="service_image" width="555" height="370" src="{{ MEDIA_URL }}{{ service.get_image }}" class="attachment-post-thumbnail wp-post-image" alt="{{ service.title }}"/>
 										</div>
 										<div class="col-md-6">
-											<h3 id="service_name" name="service_name"><b>Jardinería Bonsai</b></h3>
+											<h3 id="service_name" name="service_name"><b>{{ service.title }}</b></h3>
 											<p id="service_price" name="service_price">
-												 $250 x hora
+												 $ {{ service.price }} x 
+												 {% for pd in price_delimiter %}
+				                                    {% if service.price_delimiter == pd.0 %} {{ pd.1 }} {% endif %}
+				                                 {% endfor %}
 											</p>
 											<p id="service_brief" name="service_brief">
-												 Compañía con 35 años de experiencia cuidando de las áreas verdes de la ciudad. Contamos con servicios de podado, decoración, riego y fertilización. 
+												{{ service.brief_description}}
 											</p>
 										</div>
 										<div class="col-md-3">
 											<br/><br/><br/>
 											<form class="edd_download_purchase_form" method="post">
 												<div class="edd_purchase_submit_wrapper">
-													<a id="edit_button" href="/editservice/" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Editar</span></a>
+													<a id="edit_button" href="/editservice/{{ service.serviceID }}" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white"> <i class="fa fa-edit"></i>  Editar</span></a>
 												</div>
 											</form>
 										</div>
 									</div>
-									<hr>
-
-									<div class="row">
-										<div class="col-md-3">
-											<br/>
-											<img width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/5_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="5_1"/>
-										</div>
-										<div class="col-md-6">
-											<h3><b>José Gardens</b></h3>
-											<p>
-												 $200 x hora
-											</p>
-											<p>
-												 Empresa familiar para el cuidado de tu jardín. Servicio serio y honesto de muy buena calidad.
-											</p>
-										</div>
-										<div class="col-md-3">
-											<br/><br/><br/>
-											<form class="edd_download_purchase_form" method="post">
-												<div class="edd_purchase_submit_wrapper">
-													<a href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Editar</span></a>
-												</div>
-											</form>
-										</div>
-									</div>
-									<hr>
-
-									<div class="row">
-										<div class="col-md-3">
-											<br/>
-											<img width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/181_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="181_1"/>
-										</div>
-										<div class="col-md-6">
-											<h3><b>Azaleas Co.</b></h3>
-											<p>
-												 $400 x hora
-											</p>
-											<p>
-												 Nos encargamos de mantener las áreas verdes de tu empresa, terreno o campus en el mejor estado. Contamos con empleados altamente calificados. 
-											</p>
-										</div>
-										<div class="col-md-3">
-											<br/><br/><br/>
-											<form class="edd_download_purchase_form" method="post">
-												<div class="edd_purchase_submit_wrapper">
-													<a href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Editar</span></a>
-												</div>
-											</form>
-										</div>
-									</div>
-									<hr>
-
-									<div class="row">
-										<div class="col-md-3">
-											<br/>
-											<img width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/133_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="133_1"/>
-										</div>
-										<div class="col-md-6">
-											<h3><b>Jardín Zen</b></h3>
-											<p>
-												 $150 x hora
-											</p>
-											<p>
-												 Empresa familiar para el cuidado de tu jardín. Servicio serio y honesto de muy buena calidad.
-											</p>
-										</div>
-										<div class="col-md-3">
-											<br/><br/><br/>
-											<form class="edd_download_purchase_form" method="post">
-												<div class="edd_purchase_submit_wrapper">
-													<a href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Editar</span></a>
-												</div>
-											</form>
-										</div>
-									</div>
-									<hr>
-
-									<div class="row">
-										<div class="col-md-3">
-											<br/>
-											<img width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2014/07/138_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="138_1"/>
-										</div>
-										<div class="col-md-6">
-											<h3><b>Podadoras Track</b></h3>
-											<p>
-												 $250 x unidad
-											</p>
-											<p>
-												 Consultoría para el uso adecuado de herramientas para el mantenimiento de jardines: podadoras, rastrillos, tijeras, fertilizantes.
-											</p>
-										</div>
-										<div class="col-md-3">
-											<br/><br/><br/>
-											<form class="edd_download_purchase_form" method="post">
-												<div class="edd_purchase_submit_wrapper">
-													<a href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Editar</span></a>
-												</div>
-											</form>
-										</div>
-									</div>
+									<hr>																	
+									{% endfor %}
 								</div>
 								<div class="col-md-1">
 								</div>
@@ -225,11 +131,7 @@
 						</div>
 						<div class="clear">
 						</div>
-						<div align="center">
-							<div class='pagination'>
-								<span class='current'>1</span><a href='#' class='inactive'>2</a>
-							</div>
-						</div>
+
 						
 					</div>
 					<!-- MAIN CONTENT ENDS -->

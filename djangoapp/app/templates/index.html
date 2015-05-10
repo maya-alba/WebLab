@@ -48,6 +48,7 @@
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
 						{% if user.is_active %}
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -97,42 +98,46 @@
 					<div class="divider1">
 					</div>
 					<div class="clear text-center sectionbestseller">
-						<h2 class="maintitle">LOS MÁS VENDIDOS</h2>
+						<h2 class="maintitle">LOS MÁS VENDIDOS </h2>
 						<div class="separatr">
 							<span style="font-size: 0.77em;text-transform:uppercase;"><i class="fa fa-star"></i>&nbsp; Los servicios preferidos por los gurús &nbsp; <i class="fa fa-star"></i></span>
 						</div>
 					</div>
 					<div class="wowitemboxlist sectionbestseller clear">
-					
+					{%for ti in top_info %}
 						<div class="wowitembox">
 							<div class="wowitemboxinner">
 								<div class="imagearea">
-									<img width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/133_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="133_1"/>
+									{% if ti.service_image %}
+											<img id="service_image" name="service_image" width="555" height="370" src="{{ MEDIA_URL }}{{ ti.get_image }}" class="attachment-post-thumbnail wp-post-image" alt="{{ ti.title }}"/>
+                                        {% else %}
+                                            <img id="service_image" name="service_image" width="555" height="370" src="{{ MEDIA_URL }}//offered_service//default.jpg" class="attachment-post-thumbnail wp-post-image" alt="No image"/>
+                                    {% endif %}
 									<div class="caption">
 										<div class="blur">
 										</div>
 										<div class="caption-text">
 											<div class="captionbuttons">
-												<a href="/serviceoverview/" class="captiondetails"><i class="fa fa-link"></i> Obtener más información</a>
+												<a href="/serviceoverview/{{ ti.serviceID }}" class="captiondetails"><i class="fa fa-link"></i> Obtener más información</a>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="notesarea">
-									<a href="/serviceoverview/">
-									<h2>Limpieza Josefina</h2>
+									<a href="/serviceoverview/{{ ti.serviceID }}">
+									<h2>{{ ti.title }}</h2>
 									</a>
 									<div class="description">
 										<p>
-										Manten limpia tu casa con este encatador servicio.
+										{{ ti.brief_description}}
 										</p>
 									</div>
 									<div class="notesbottom">
 										<div class="price fleft">
-											$200.00 
+											$ {{ ti.price}}
 										</div>
 										<div class="cart fright">
-											<a href="/serviceoverview/" class="edd-add-to-cart">
+											<a href="/serviceoverview/{{ ti.serviceID }}" class="edd-add-to-cart">
 												<span class="edd-add-to-cart-label">Comprar</span>
 											</a>
 										</div>
@@ -143,130 +148,9 @@
 							</div>
 							<!-- .wowitemboxinner-->
 						</div>
+						{% endfor %}
 						<!-- .wowitembox-->
 						
-						<div class="wowitembox">
-							<div class="wowitemboxinner">
-								<div class="imagearea">
-									<img width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/181_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="181_1"/>
-									<div class="caption">
-										<div class="blur">
-										</div>
-										<div class="caption-text">
-											<div class="captionbuttons">
-												<a href="/serviceoverview/" class="captiondetails"><i class="fa fa-link"></i> Obtener más información </a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="notesarea">
-									<a href="/serviceoverview/">
-									<h2>Nanny la Nana</h2>
-									</a>
-									<div class="description">
-										<p>
-										 Empleada domestica de planta, con experiencia en pedagogía.
-										</p>
-									</div>
-									<div class="notesbottom">
-										<div class="price fleft">
-											$500.00 
-										</div>
-										<div class="cart fright">
-											<a href="serviceoverview.html" class="edd-add-to-cart">
-												<span class="edd-add-to-cart-label">Comprar</span>
-											</a>
-										</div>
-										<div class="clearfix">
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- .wowitemboxinner-->
-						</div>
-						<!-- .wowitembox-->
-						
-						<div class="wowitembox">
-							<div class="wowitemboxinner">
-								<div class="imagearea">
-									<img width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/168_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="168_1"/>
-									<div class="caption">
-										<div class="blur">
-										</div>
-										<div class="caption-text">
-											<div class="captionbuttons">
-												<a href="serviceoverview.html" class="captiondetails"><i class="fa fa-link"></i> Obtener más información  </a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="notesarea">
-									<a href="serviceoverview.html">
-									<h2>Jose el carpintero</h2>
-									</a>
-									<div class="description">
-										<p>
-										 Hacemos su sala a medida, la alta calidad que solo don Jose ofrece.
-										</p>
-									</div>
-									<div class="notesbottom">
-										<div class="price fleft">
-											$5,000.00 
-										</div>
-										<div class="cart fright">
-											<a href="serviceoverview.html" class="edd-add-to-cart">
-												<span class="edd-add-to-cart-label">Comprar</span>
-											</a>
-										</div>
-										<div class="clearfix">
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- .wowitemboxinner-->
-						</div>
-						<!-- .wowitembox-->
-						
-						<div class="wowitembox">
-							<div class="wowitemboxinner">
-								<div class="imagearea">
-									<img width="555" height="370" src="http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/5_1.jpg" class="attachment-post-thumbnail wp-post-image" alt="5_1"/>
-									<div class="caption">
-										<div class="blur">
-										</div>
-										<div class="caption-text">
-											<div class="captionbuttons">
-												<a href="serviceoverview.html" class="captiondetails"><i class="fa fa-link"></i> Obtener más información </a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="notesarea">
-									<a href="serviceoverview.html">
-									<h2>Comida saludable</h2>
-									</a>
-									<div class="description">
-										<p>
-										 Chef a domicilio, usted pone los ingredientes nosotros los preparamos.
-										</p>
-									</div>
-									<div class="notesbottom">
-										<div class="price fleft">
-											$100.00 
-										</div>
-										<div class="cart fright">
-											<a href="serviceoverview.html" class="edd-add-to-cart">
-												<span class="edd-add-to-cart-label">Comprar</span>
-											</a>
-										</div>
-										<div class="clearfix">
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- .wowitemboxinner-->
-						</div>
-						<!-- .wowitembox-->
 						
 					</div>
 					<!-- .wowitemboxlist-->

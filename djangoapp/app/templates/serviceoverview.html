@@ -10,13 +10,13 @@
 	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/bootstrap.min.css' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ MEDIA_URL }}css/style.css' type='text/css' media='all'/>
 	<link rel='stylesheet' href='{{ MEDIA_URL }}assets/css/font-awesome.css' type='text/css' media='all'/>
-	
+
 	<!-- UNCOMMENT THE FOLLOWING LINE TO ACTIVATE THE BOXED LAYOUT (see the documentation for more)-->
-	
+
 	<!--
 	<link href="assets/css/boxed.css" rel="stylesheet">
-	-->	
-	
+	-->
+
 	<!-- CHANGE THEME SKIN COLOR HERE (replace blue with any other color from assets/css/skins/ folder) -->
 	<link href="{{ MEDIA_URL }}assets/css/skins/bluedark.css" rel="stylesheet">
 
@@ -48,6 +48,7 @@
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
 						{% if user.is_active %}
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -70,7 +71,7 @@
 		<!-- PAGE CONTENT
 		================================================== -->
 		<div class="singledownloadphp">
-		
+
 			<!-- TITLE BEGINS -->
 			<div class="headerimage" style="background-image: url(http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2015/03/header.jpg);">
 				<div class="headercontent">
@@ -92,10 +93,10 @@
 				</div>
 			</div>
 			<!-- TITLE ENDS -->
-			
+
 			<div class="container padtop50 padbot50">
 				<div class="row">
-				
+
 					<!-- MAIN CONTENT BEGINS -->
 					<div class="col-md-12">
 						<div id="primary" class="content-area">
@@ -118,20 +119,22 @@
 										<br/>
 										<b>Más detalles del servicio: </b>
 										<p>
-											 {{ service.descripton}}
+											 {{ service.description}}
 										</p>
 								</div>
 								<div class="col-md-3">
 									<div id="secondary" class="widget-area" role="complementary">
 										<aside id="text-4" class="widget widget_text">
-											<h1 class="widget-title section-title sortitemsarea"><span>Ordenar por</span></h1>
+											<h1 class="widget-title section-title sortitemsarea"><span>Resumen del servicio</span></h1>
 											<ul id="city" name="city" class="edd-taxonomy-widget">
 												<li>
-													<span class="entrylocation"><b>Ubicación: </b> {{ service.city }}, {{ service.state }}<br/></span>
+													<span class="entrylocation"><b>Ubicación: </b> {% for c in location %}{% if c.0 == service.city%}{{c.1}}{% endif %}{% endfor %}, {{ service.state }}<br/></span>
 												</li>
 												<li>
 													<label for="service_price"><b>Precio:</b>
-														<span id="service_price">${{ service.price}} x {{ service.price_delimiter}}</span>
+														<span id="service_price">${{ service.price}} x {% for pd in price_delimiter %}
+				                                    {% if service.price_delimiter == pd.0 %} {{ pd.1 }} {% endif %}
+				                                 {% endfor %}</span>
 													</label>
 												</li>
 												<li>
@@ -144,18 +147,23 @@
 												</li>
 												<li>
 													<label for="service_company_type"><b>Compañía:</b>
-														<span id="service_company_type">Freelance</span>
+														<span id="service_company_type">{{ service.get_company }}</span>
 													</label>
 												</li>
 												<li>
-													<span class="entrybasicaddto">
-														<a id="buy_button" name="buy_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white">Comprar</span></a>
-													</span>
+													<label for="service_rating"><b>Rating:</b>
+														<span id="service_rating_value">{{ service.rating }}</span>
+													</label>
 												</li>
+												
+													
+														<a id="buy_button" name="buy_button" href="#" class="edd-add-to-cart button edd-submit"><span class="edd-add-to-cart-label white"><i class="fa fa-shopping-cart"></i> Agregar</span></a>
+													
+												
 											</ul>
 										</aside>
-									</div>	
-									
+									</div>
+
 								</div>
 							</div>
 							</article>
@@ -166,12 +174,12 @@
 
 				</div>
 			</div>
-		</div>		
+		</div>
 				<!-- CALL TO ACTION
 		================================================== -->
 		<div class="actionbeforefooter text-center">
 			<div class="container">
-				
+
 			</div>
 		</div>
 		<!-- FOOTER
@@ -179,7 +187,7 @@
 		<footer class="themefooter section medium-padding bg-graphite">
 		<div class="container">
 			<div class="section-inner row">
-				
+
 				<div class="column column-1 col-md-4 rightbd">
 					<div class="widgets">
 						<div class="widget widget_text">
@@ -274,6 +282,26 @@
 
 		<!-- /footer -->
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/jquery.js'></script>
+        <script type='text/javascript'>
+			jQuery(document).ready(function($) {
+				$("#buy_button").click(function(){
+                    $.ajax({
+					    url : "/add_to_cart/",
+                        type : "POST",
+                        data : {
+                            'service_id' : '{{ service.serviceID }}',
+                            'csrfmiddlewaretoken' : '{{ csrf_token }}'
+                        },
+                        success : function(rc) {
+                            alert("¡Se ha agregado a tu carrito!");
+                        },
+                        error : function(error) {
+                            alert(error);
+                        }
+                    });
+				});
+			});
+        </script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/bootstrap.min.js'></script>
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/masonry.js'></script>2w
 		<script type='text/javascript' src='{{ MEDIA_URL }}assets/js/imagesloaded.js'></script>

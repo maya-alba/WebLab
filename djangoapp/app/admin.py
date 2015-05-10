@@ -10,3 +10,8 @@ class OfferedServiceAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(OfferedService, OfferedServiceAdmin)
+
+class PurchasedServiceAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(PurchasedService, PurchasedServiceAdmin)

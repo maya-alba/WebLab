@@ -84,11 +84,11 @@
 #edd_checkout_cart a.edd-cart-saving-button { font-weight: normal; text-decoration: none; }
 
 /* Checkout Fields */
-#edd_checkout_form_wrap legend { display:block; font-size: 120%; line-height: 1; font-weight: bold; width: 100%; margin: 0 0 21px 0; padding: 0; }
+#edd_checkout_form_wrap legend { display:block; font-size: 120%; line-height: 1; font-weight: bold; width: 100%; margin: 0 0 40px 0; padding: 0; }
 #edd_checkout_form_wrap label { font-weight: bold; display:block; position: relative; line-height: 100%; font-size: 95%; margin: 0 0 5px; }
 #edd_checkout_form_wrap label:after { display: block; visibility: hidden; float: none; clear: both; height: 0; text-indent: -9999px; content: "."; }
 #edd_checkout_form_wrap span.edd-description { color: #666; font-size: 80%; display: block; margin: 0 0 5px; }
-#edd_checkout_form_wrap input.edd-input, #edd_checkout_form_wrap textarea.edd-input { display: inline-block; width: 70%;border: 1px solid #eee; }
+#edd_checkout_form_wrap input.edd-input, #edd_checkout_form_wrap textarea.edd-input { display: inline-block; width: 70%;border: 5px solid #eee; }
 #edd_checkout_form_wrap select.edd-select { display:block; width: 60%; }
 #edd_checkout_form_wrap select.edd-select.edd-select-small { display:inline; width: auto; }
 #edd_checkout_form_wrap input.edd-input.error, #edd_checkout_form_wrap textarea.edd-input.error { border-color: #c4554e; }
@@ -512,4 +512,8 @@ margin-top: -4px;
 
 .notResTxtArea {
     resize: none;
+}
+
+.gray_back{
+    background-color: #FAFAFA;
 }

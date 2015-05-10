@@ -120,7 +120,7 @@ input[type=submit]:hover {
 }
 label {
 	font-weight:300;
-	font-size: 13px;
+	font-size: 15px;
 }
 /* -------------------------------------------------------------------------------- */
 /*	Navigation/* -------------------------------------------------------------------------------- */
@@ -886,7 +886,7 @@ form.wowsortitems {
 	color:#444;
 }
 .templatemyaccount span.smalltitle {
-	font-size:15px;
+	font-size:18px;
 	text-transform:uppercase;
 	font-weight:700;
 	margin-bottom:10px;
@@ -911,7 +911,7 @@ form.wowsortitems {
 	padding-left:30px;
 }
 .templatemyaccount fieldset {
-	border:1px solid #eee;
+	border:2px solid #eee;
 	margin:0;
 	padding:25px;
 }
@@ -1001,7 +1001,7 @@ form.wowsortitems {
 	border:1px solid rgba(0,0,0,0.1);
 }
 .contentdownloadphp .edd-add-to-cart.button.edd-submit:before {
-	content:"\f217";
+	
 	font-family:FontAwesome;
 	margin-right:5px;
 }
@@ -1315,7 +1315,6 @@ ul.edd-taxonomy-widget li {
 	border-bottom:1px dotted #eee;
 	padding-top:9px;
 	padding-bottom:9px;
-	text-transform:capitalize;
 }
 ul.edd-taxonomy-widget li:last-child {
 	border-bottom:0px;
@@ -1377,7 +1376,7 @@ ul.edd-taxonomy-widget li a:before {
 	-webkit-transition:all .2s;
 	-moz-transition:all .2s;
 	transition:all .2s;
-	background-color:#2dcc70;
+	background-color:#3a97b1;
 	color:#fff;
 	display:block;
 	margin-top:20px;
@@ -1388,7 +1387,7 @@ ul.edd-taxonomy-widget li a:before {
 }
 .widget_edd_cart_widget .edd_checkout a:before {
 	font-style:normal;
-	content:"\f090";
+	content:"\f002";
 	font-family:FontAwesome;
 	margin-right:5px;
 }
@@ -1708,10 +1707,10 @@ input[type="text"],input[type="password"],input[type="datetime"],input[type="dat
 	outline:none;
 	border-width:1px;
 	border-style:solid;
-	border-color:#eee;
-	background-color:transparent;
+	border-color:#D6D6D6;
+	background-color:#FFFFFF;
 	color:#777;
-	font-size:12px;
+	font-size:14px;
 	-webkit-box-shadow:none;
 	box-shadow: none;
 }

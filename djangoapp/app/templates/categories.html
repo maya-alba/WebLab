@@ -48,6 +48,7 @@
 						<li><a href="/offerservice">Ofrecer Servicio</a></li>
 						<li><a href="/about">Quiénes somos</a></li>
 						{% if user.is_active %}
+						<li><a href="/checkout/"><i class="fa fa-shopping-cart"></i> Carrito</a></li>
 						<li class="dropdown"><a href="#">Hola {{ user.first_name }}!</a>
 							<ul class="dropdown-menu">
 								<li><a href="/account">Mi cuenta</a></li>
@@ -109,13 +110,13 @@
 								<div class="imagearea">
 									<img width="555" height="370" class="attachment-post-thumbnail wp-post-image" src=
                                         {% if service.0 == "LO" %}
-                                        "http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/163_1.jpg"
+                                        "{{ MEDIA_URL }}assets/img/cleaning.jpg"
                                         {% else %}
                                             {% if service.0 == "JA" %}
-                                            "http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/2014/07/138_1.jpg"
+                                            "{{ MEDIA_URL }}assets/img/gardening.jpg"
                                             {% else %}
                                                 {% if service.0 == "SN" %}
-                                                "http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/172_1.jpg"
+                                                "{{ MEDIA_URL }}assets/img/nanny.jpg"
                                                 {% endif %}
                                             {% endif %}
                                         {% endif %}
@@ -155,13 +156,13 @@
 								<div class="imagearea">
 									<img width="555" height="370" class="attachment-post-thumbnail wp-post-image" src=
                                         {% if service.0 == "MA" %}
-                                        "http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/166_1.jpg"
+                                        "{{ MEDIA_URL }}assets/img/mascota.jpg"
                                         {% else %}
                                             {% if service.0 == "CO" %}
-                                            "http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/168_1.jpg"
+                                            "{{ MEDIA_URL }}assets/img/comida.jpg"
                                             {% else %}
                                                 {% if service.0 == "OT" %}
-                                                "http://www.themepush.com/demo-kailo/wp-content/uploads/sites/6/edd/2015/03/133_1.jpg"
+                                                "{{ MEDIA_URL }}assets/img/otros.jpg"
                                                 {% endif %}
                                             {% endif %}
                                         {% endif %}
